@@ -1,0 +1,30 @@
+ANSIBLE INSTALLATION 
+sudo amazon-linux-extras epel
+sudo amazon-linux-extras ansible2
+ansible --version
+
+control node(ansible installed machine) should have acces to managed nodes through password less authrntication
+Inventory/hostfile has (list of managed nodes info i.e., private IPs)
+playbooks - these are actual tasks need to be executed on target systems/manged nodes
+Tasks: unit of action in ansible
+
+
+PERFORM ALL THIS STUFF AS A ROOT USER
+create a useradd ansadmin, passwd ansadmin then cat /etc/passwd - helps list the users
+visudo - here add ansadmin under the root and paste the stuff like ALL NOPASSWORD=ALL (shift+g to go end of line, and / to search specific stuff)
+Enable password based authentication 
+/etc/ssh/sshd_config (search using /Password)
+i) uncomment the Password authentication=yes
+ii)comment the Password authentication=no
+service/systemctl sshd restart
+
+
+SWITCH TO THE ANSADMIN (sudo su - ansadmin)
+ssh-keygen (press enter)
+the keys gonna stored in the .ssh directory
+we gonna copy rsa-public key onto target systems(ssh-copy-id private IP of target systems)
+ansible all -m ping (test the connection b/w the control node and target systems)
+
+ansible-playbook user.yml -i hosts --check
+ansible-playbook user.yml -i hosts --syntax-check
+

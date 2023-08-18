@@ -1,0 +1,117 @@
+VMs are advancement to physical servers, containers are advancement to VMs 
+docker is a package of application, application libraries(dependencies) and system dependencies
+Dockerfile > build > Docker Image > run Docker containers (if we wanna fulfill this stuff, use docker engine(basically a docker daemon) on aws ec2)
+Docker engine is a single point of failure
+Docker containers are very light weight 
+containerization is a technology, docker implements the containerization
+docker cli is the client
+docker daemon is a process that we gonna install (basically a docker engine)
+Dockerfile - it's the place where we can provide the steps to build docker Image
+
+
+DOCKER INSTALLATION AND COMMANDS
+yum docker install -y
+systemctl status docker
+systemctl start docker 
+docker --version
+docker images
+docker images | head -5
+docker ps (only shows the running containers)
+docker ps -a (shows all containers irrespective of their running status)
+docker build -t <arbitary-name>  .
+
+docker run -it (i- interactive, t- terminal)--name <arbitary-name> --port (ec2-port):(containerport) <imagename> /bin/bash  - this command creates the container as well login to the container
+docker run -it nginx bin/bash press exit, to come outta container, and the container gets stopped, ctrl pq just terminates out session, but won't stop
+docker run -dt nginx shell (d-detached mode, conatiner gets created, but will not go inside the conatiner)
+docker exec -it <container-name>  /bin/bash - this command helps to enter the terminal after container is created
+docker run -dt --name <conatiner-name>  --hostname<host-name> nginx
+docker run -dt --name <container-name> -p 8080:80 ((host-port)left port i.e., 8080, to connect on to the external world, the right side i.e., 80(container-port)available inside the container)
+user > docker host(ec2) > docker container(nginx/tomcat/jenkins)
+docker commit <container-id> sudhamshapp/<arbitaryimagename:version> this gets landed in docker images
+
+docker run -dt --name nginx1 --network 192network -p 8082:80 nginx /bin/bash(I created a bridge network and named 192network that's it)
+docker run -dt --name nginx2 --network=172network -p 8083:80 nginx /bin/bash
+
+docker inspect <container-id>
+docker stop <container-id>
+docker start <container-id>
+docker rm <container-id>
+docker rm -f <container-id> (forcefully terminates the running container)
+
+FOR PUSHING THE IMAGE TO DOCKERHUB
+docker tag <imagename> sudhamshapp/<imagename> (prefer this step, if the image isn't tagged)
+docker login(provide docker username i.e., sudhamshapp then passwd i.e., Buddy$1996)
+docker push sudhamshapp/<imagename>
+
+
+DOCKERFILE
+All the commands in dockerfile will apply to the container environment, none of them will be effecting the host environment/laptop environment
+FROM Reference the image(apline, ubuntu, centos)
+RUN runs the linux commands (gets executed at the image creation time) (for example docker buid)(executes inside the container)
+COPY copies the file from docker host(ec2, localmachine) to container (executes on the host)
+ADD http://somerandomwebsite(no need to use the wget) destination
+EXPOSE we need to expose the port where the application is listening
+CMD when container is created then during the runtime the application will be started, CMD stuff can be override during the creation of container (gets executed inside the container once the container is created)((for example docker run))
+
+{ENTRYPOINT AND CMD}
+whenever we run the docker run both entrypoint and cmd can serve as start command
+entrypoint can't be override, it's static
+cmd can be modified during the runtime, but entrypoint we can't modify whwatever the value we're giving, that's not gonna modified during runtime
+
+
+
+DOCKER VOLUMES
+bind mounts
+volumes - logical partition on a host
+volume has lifecycle we can create, destroy
+docker volume create <arbitary-name-for-volume>
+docker volume inspect <arbitary-name-for-volume> - we can get the details of docker volume
+docker volume rm <arbitary-name-for-volume>
+docker volume ls
+docker run -d --mount source=<volume-name>,target=/app nginx  (mounting the volume on container)
+docker run -it --name nginx -v /data nginx /bin/bash (attching the volume on the go, we din't create the volume specifically using docker volume ls /data(data, it's like where we wanna mount) explicitly here) - first-stuff, volume creation
+docker run -it --name nginx2 -v 876de6223bc1924d815ddec5777560df3735f8b4da0f165e8bb22dd472612620(this long-id we get using the docker volume ls):/data1(/is common we can name anything) nginx /bin/bash - we're attaching the existing volume from first stuff
+docker run -it --name nginx-mars -v test_vol:/data5 nginx /bin/bash
+/var/lib/docker - this is where the docker volume gets stored
+inside the container if we say it's /data then
+in the docker host the volume is /var/lib/docker/<volume-name>/_data("Mountpoint": "/var/lib/docker/volumes/test_vol/_data",(we get this by using docker volume ls ))
+we can also copy the files from docker host to container - below is the example
+docker run -it --name nginx1 -p 8087:80 -v /root/sid/:/usr/share/nginx/html nginx /bin/bash (/root/sid has the index.html file)
+we need to go into the nginx container and start the services
+/etc/init.d /nginx status then /etc/init.d /nginx status
+
+
+
+DOCKER NETWORK
+docker drivers - host, bridge, macvlan, overlay and null
+docker network ls
+Bridge (default networkng in docker)(virtual etherent docker0(do ifconfig)(this helps connects the docker host(ec2) and docker containers))(when we install docker on ec2, it's a docker host)
+docker network create --driver=bridge --subnet=192.168.0.0/16 192network
+docker network create --driver=bridge --subnet=172.28.0.0/16 --ip-range=172.28.5.0/24 --gateway=172.28.5.254 172network(172 is network name)
+docker network create <arbitary-name-for-network>
+docker network inspect <arbitary-name-for-network/networkid>
+docker network rm test
+docker run -d --network=<network-name(mounting the custom network)> nginx
+docker run -d --network=host<default-network-of-docker> nginx
+host network won't have the IP when ran with container
+
+DOCKER COMPOSE
+docker compose creates multiple containers
+written in yaml
+docker-compose installtion steps
+sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker-compose version
+docker-compose
+to create the conatiners which are interdepenedant on each other, in that scenario we use docker compose so altogether will be created
+docker-compose up - to start the docker-compose.yml file
+docker-compose stop - stops the containers
+we can't run the replicas over here, we can't scale up(if we wanna do such activity we use docker swarm/kubernetes)
+docker-compose -f mongo.yml up
+docker-compose -f mongo.yml down
+
+
+
+DEBUGGING A CONTAINER
+docker logs <container-id>
+docker exec -it <container-id>  /bin/bash (press exit, to come outta container, and the container gets stopped, ctrl pq just terminates out session, but won't stop)

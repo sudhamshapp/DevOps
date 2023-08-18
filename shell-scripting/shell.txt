@@ -1,0 +1,28 @@
+ps -ef -displays the running processes
+ps -ef | wc -l -gives the total number of processes
+
+rpm -qa | grep -i nginx (rpm -qa displays the installed packages)
+
+cat /etc/os-release (helps on which os the container is running)
+
+if it's a debian
+
+apt-get update 
+apt-get install net-tools(package name to get ifconfig in debian)
+apt-get install iputils-ping (for ping command)
+
+
+for starting the nginx in the container
+/etc/init.d/nginx status
+/etc/init.d/nginx start 
+
+
+df -h (tells the disk size)
+
+find / -name file1
+
+
+vi /etc/hostname(give the desired hostname and restart) - helps set the hostname
+
+
+histroy | grep -i helm

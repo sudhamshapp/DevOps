@@ -1,0 +1,112 @@
+MASTER NODE COMPONENTS
+API server
+kube controller
+sheduler 
+etcd database
+
+WORKER NODE 
+kubelet 
+kube proxy
+
+https://kubernetes.io/ - kubernetes documentation
+
+EFK stands for Elasticsearch, Fluent bit, and Kibana. Elasticsearch is a scalable and distributed search engine that is commonly used to store large amounts of log data. It is a NoSQL database. Its primary function is to store and retrieve logs from fluent bit.2
+
+To create any objects(pod/deployment/service and etc) in kubernetes use manifest files
+apiVersion
+kind
+metadata
+spec
+
+if there are two containers in pod, they can communicate with network namespace
+when we create pod using manifest file, pod only gets the IP, but not the conatiner
+
+
+
+kubectl get all
+kubectl get all -o wide
+kubectl get service
+kubectl get namespaces
+kubectl get nodes
+kubectl get pods -n <namespace-name> if we created in the namespace
+kubectl get pods -o wide (displays on which node it got created)
+kubectl get pods --watch
+kubectl create -f pod.yml
+kubectl describe pod <nameofthepod>
+kubectl exec -it <pod-name> -- /bin/bash - go inside the pod, like goin' inside docker conatiner
+kubectl exec -it -c <pod-name> -- /bin/bash - to login to the specific container in a pod
+kubectl delete pod <podname>
+kubectl delete -f file.yml
+
+kubectl scale rc <rc-name> --replicas=5 (we can scale the cluster with replication controller, on the cli) or kubectl edit rc <replication-controller name>
+if we won't mention selector then replication controller won't do scale out/in
+But we won't use replication controller or replicaset to deploy our apps in realtime
+
+stateless means the application won't gonna save the data, so if container or pod dies, we won't bother about data, if we expect the data that is stateful application
+Majorly we use deploymnets in realtime(Recreate, rolling-update, Blue/green, canary) - we use this when we upgrade the application without downtme
+in deploymnets the replicaset is there by default
+kubectl describe deployment nginx-deployment
+kubectl get deployment
+kubectl get replicaset (it's automatically created when deployment is created)
+ Types of deploying applications replicaset, replication controller, deployments, daemonsets, statefulsets
+
+
+SERVICES
+services work with the concept called selector
+kubectl get service (service selector name and pod label name should be matched for the perfect connection)
+ClusterIP - we use internally, can't be exposed to the external world, works within the cluster(curl http://<ipofpod>(kubectl get po -o wide/kubectl describe po <podname>))
+NodePort - if we wanna access our application from external world, we need to configure service type called NodePort(30000-32767)(it's not that better for HA) - this is not recommended for production traffic, we should use the load balancer
+LoadBalancer
+
+NAMESPACES
+kubectl get namespace
+kuebectl get pods -n <name-of-the namespace>
+kuebectl get all -n <name-of-the namespace>
+kubectl create namespace <name-of-the-namespace>
+
+
+
+configmaps is in plain text format
+secrets is in encoded format
+
+CONFIGMAPS
+can be created using directories, files and literals
+kubectl get cm 
+kubectl get cm <configmap-file-name> -o yaml (gives the file output to yaml)
+
+
+HELM
+Helm is the pachage manager for kubernetes
+https://helm.sh/ - helm official website
+
+
+
+PersistentVolume PersistentVolumeClaims
+kubectl get pv
+kubectl get pvc
+kubectl get pv, pvc (we check this together as well)
+
+
+
+HORIZONTAL POD AUTOSCALER(it also the also has the cooling period, suppose if there is a decrease of load, there is a coolng period time, to scale in the pod, it should elapse the cooldown period)
+kubectl get hpa
+kubectl describe hpa <name-of-the-hpa>
+we can configure for cpu, network utilizaton and ram(based on the metrics)
+kubectl top pods -n <namespace-name>(shows the uasge of metrics)
+
+
+CENTRALIZED LOCATION FOR LOGS(EFK ELASTICSEARCH, FLUENTD AND KIBANA)
+kubectl get pods
+kubectl logs <pod-name> (standard output, which prints onto the console), but logs need to be redirected to a logfile
+
+elasticsearch is a database
+fluentd resides in the worker nodes and send the application log files info to elasticsearch
+kibana visualization tool fetches the log data from elasticsearch and displays the on the dashboard
+can be deployed using the helm charts
+These three get deployed as pods
+fluentd is available in all worker nodes
+
+
+
+For Daemonsets, replicas won't work.
+sidecar container

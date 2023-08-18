@@ -1,0 +1,8 @@
+JENKINS CI
+git clone
+maven builds the java code and generates the artifacts(ear, war)
+create a docker image
+push image to the docker repo
+
+JENKINS CD 
+pulls the artifactactory from jfrog and deploy onto kubernetes
