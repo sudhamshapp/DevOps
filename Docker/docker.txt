@@ -115,3 +115,8 @@ docker-compose -f mongo.yml down
 DEBUGGING A CONTAINER
 docker logs <container-id>
 docker exec -it <container-id>  /bin/bash (press exit, to come outta container, and the container gets stopped, ctrl pq just terminates out session, but won't stop)
+
+
+
+
+

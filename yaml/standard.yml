@@ -1,0 +1,24 @@
+#Saclars
+name: sudhamsh
+proffesion: IT
+Location: Hyderabad
+#lists
+Hobbies:
+  - drinking
+  - walking
+  - deep dive:
+     - beers
+     - parks
+#mappings
+person:
+  name: ashridh
+  proffesion: drives the cars
+  tecnologies:
+    aws: cloud
+    docker: containers
+    kubernetes: container orchestration
+#multiline scalars
+multiline-key: |
+  this is some random stuff, wanna have fun learning in the
+  yaml syntax to prepare on the docker-compose, kubernetes-manifest files and
+  ansible palybooks
