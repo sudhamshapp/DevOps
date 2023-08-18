@@ -7,6 +7,12 @@ push image to the docker repo
 JENKINS CD 
 pulls the artifactactory from jfrog and deploy onto kubernetes
 
+provision the aws ec2 intance
+install Java, install jenkins
+start jenkins
+Access the web UI on port 8080
+jenkins official website - https://pkg.jenkins.io/redhat-stable/
+
 can be installed from the root itself, no need of switching to /opt/
 jenkins path - /var/lib/jenkins - has all the configuration files
 sudo amazon-linux-extras install java-openjdk11 -y (<package-name>(java:latestversion))
@@ -19,6 +25,44 @@ sudo systemctl start jenkins
 sudo systemctl status  jenkins
 sudo systemctl stop  jenkins
 sudo systemctl restart  jenkins
+
+
+For configuring the path like git, maven, java Managejenkins>Tools>git(UI flaunts, if we install the github plugin)>then add the path(in the cli use the command whereis git)
+
+
+installation of maven on jenkins
+setup maven on jenkins server
+setup the environment variables
+JAVA_HOME(for java), M2, M2_HOME(for maven)
+install the maven plugin
+configure the maven and Java
+should be installed on /opt/
+then cd maven > bin > ./mvn -v (gives the version of maven), but when we do it outside of the directory, it won't work that's why we need to add it in the environment variables, to set up the env variables we can update in the .bash_profile of the user which it gonna use or upate in the env variables, here we need to add the java path as well as maven path
+==================================================================
+M2_HOME=/opt/maven - path of maven where we've configured
+M2=/opt/maven/bin - binary directory
+JAVA_HOME=/usr/lib/jvm/java-11-openjdk-11.0.20.0.8-1.amzn2.0.1.x86_64
+
+find / -name jvm or whereis jvm
+/usr/lib/jvm
+cd /usr/lib/jvm
+
+find / -name java-11*
+/usr/lib/jvm/java-11-openjdk-11.0.20.0.8-1.amzn2.0.1.x86_64
+M2_HOME=/opt/maven 
+M2=/opt/maven/bin 
+JAVA_HOME=/usr/lib/jvm/java-11-openjdk-11.0.20.0.8-1.amzn2.0.1.x86_64
+
+# User specific environment and startup programs
+
+PATH=$PATH:$HOME/bin:$M2_HOME:$M2:$JAVA_HOME
+source .bash_profile (for we need load them for the changes to get reflected)
+echo $PATH
+mvn -v
+Next we need to tell the jenkins UI regarding the maven and java path
+install the maven plugin
+====================================================================
+
 
 jenkins dashboard trip
 in jenkins item/project/job refers the same

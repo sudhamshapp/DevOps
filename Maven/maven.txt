@@ -1,3 +1,6 @@
+https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html - maven lifecycles
+All the build outcomes stored under target directory
+
 what is build tool
 we write some code and we wanna deploy onto tomcat
 can deploy the code directly - the answer is no
@@ -74,3 +77,14 @@ we can include in the pom.xml in the plugin tag and there are couple of commands
 this should be run within the project alike the javaproject, webapplication
 
 jacoco plugin - https://www.eclemma.org/jacoco/trunk/doc/maven.html - it's used to generate the report for sonarqude
+
+
+
+==========================================================
+
+installation of maven on jenkins
+setup maven on jenkins server
+setup the environment variables
+JAVA_HOME(for java), M2, M2_HOME(for maven)
+install the maven plugin
+configure the maven and Java
