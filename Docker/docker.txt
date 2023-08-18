@@ -120,3 +120,14 @@ docker exec -it <container-id>  /bin/bash (press exit, to come outta container, 
 
 
 
+================================================================================================================================
+
+# These are three ways we can mount the volumes for the volume which is creeated by us(i.e., using docker volume create)
+docker run -it --name=srv01 --mount source=testvol1,destination=/data centos
+docker run -it --volumes-from srv01 --name srv02 centos /bin/bash
+docker run -it --name srv04 -v testvol1 :/data centos
+
+
+# we can also create the volume parallel to the container
+docker run -it –-name srv05 -v "$(pwd)":/data1 centos - here pwd refers to the path where the file exists, we need try
+this above command where the file exists

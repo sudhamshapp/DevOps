@@ -1,0 +1,66 @@
+tomcat is application/webserver
+default port 8080, we can also change the port number if we desired to, can be changed in the server.xml can be found in /opt/tomcat/conf
+we specifically install tomcat 7.0.106 because java-1.8.0 has compatibility
+for tomcat 8/9 version, java 10/11 can be compatiblie
+installation steps
+sudo yum install java-1.8.0-openjdk-devel -y
+java -version  
+Download the tomcat tar file - 
+https://archive.apache.org/dist/tomcat/tomcat-7/v7.0.106/bin/apache-tomcat-7.0.106.tar.gz
+cd /opt/ then wget https://archive.apache.org/dist/tomcat/tomcat-7/v7.0.106/bin/apache-tomcat-7.0.106.tar.gz
+untar the file 
+tar -xvf apache-tomcat-7.0.106.tar.gz (apache-tomcat-7.0.106.tar.gz - after dwonloading with above url, we get this)
+Rename the file after the untar
+mv apache-tomcat-7.0.106 tomcat (apache-tomcat-7.0.106 - this is the file we get after the untar)
+cd /opt/tomcat - has multiple files like bin, conf, temp, webapps
+/opt/tomcat/bin
+bin directory has startup.sh and shutdown.sh stuff
+/opt/tomcat/webapps - apps deployed on this path
+we can startup the tomcat by using  this command, it can be find on bin - sh startup.sh, sh shutdown.sh (ofcourse if we do this operation from bin directory we can do is ./startup.sh, ./shutdown.sh)
+we can now access from internet
+
+
+types of roles available in tomcat, tomcat manager apps and tomcat host - give the gui access
+tomcat-users.xml - /opt/tomcat/conf - these below lines should keep under tomcat users tag
+<role rolename="manager-gui" />
+<role rolename="manager-status" />
+<role rolename="manager-script" />
+<role rolename="manager-jmx" />
+<role rolename="admin-gui" />
+<role rolename="admin-script" />
+<user username="sudhamsh" password="tomcat" roles="manager-gui,manager-status,manager-script,manager-script,manager-jmx"/>
+
+then restart the server to get the stuff kicked-in, then click on server status on gui for sign in
+
+setup tomcat as service in linux
+
+nothing but, always we can't go to this path and can't startup and shutdown right (I mean we can do but, it's tedious right? - yes)
+if we setup in the service level, we can startup and shutdown tomcat from any path
+/etc/systemd/system - navigate to this path then create a file tomcat1.service and paste the below stuff
+[Unit]
+Description=Tomcat 7.0.106 service
+After=syslog.target network.target
+
+[Service]
+User=root
+Group=root
+Type=forking
+Environment=CATALINA_PID=/opt/tomcat/temp/tomcat.pid
+Environment=CATALINA_HOME=/opt/tomcat
+Environment=CATALINA_BASE=/opt/tomcat
+ExecStart=/opt/tomcat/bin/startup.sh
+ExecStop=/opt/tomcat/bin/shutdown.sh
+SuccessExitStatus=143
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+then give the chmod 777 tomcat1.service file - gives the read, write and executable permissions
+go to the root, after that systemctl enable tomcat1.service  - we need to enable the service
+systemctl status tomcat1.service then move on to /opt/tomcat/bin do ./shutdown.sh
+systemctl start tomcat1.service
+systemctl stop tomcat1.service
+systemctl restart tomcat1.service
+
+deploy the war file on tomcat
+cp stuuf.war onto /opt/tomcat/webapps - stuff is reflected on tomcat UI

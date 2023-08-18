@@ -6,3 +6,52 @@ push image to the docker repo
 
 JENKINS CD 
 pulls the artifactactory from jfrog and deploy onto kubernetes
+
+can be installed from the root itself, no need of switching to /opt/
+jenkins path - /var/lib/jenkins - has all the configuration files
+sudo amazon-linux-extras install java-openjdk11 -y (<package-name>(java:latestversion))
+sudo amazon-linux-extras install epel -y
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+sudo yum install jenkins -y
+sudo systemctl enable jenkins
+sudo systemctl start jenkins
+sudo systemctl status  jenkins
+sudo systemctl stop  jenkins
+sudo systemctl restart  jenkins
+
+jenkins dashboard trip
+in jenkins item/project/job refers the same
+Manage jenkins sits outta the job, Manage jenkins is backbone for jenkins
+
+integrating maven in jenkins
+plugin for maven  - maven integration then opt install without restart then opt tools(present in Manage-jenkins), then maven reflects there, name it and select the desired version to enroll on our machine
+
+integrating nexus in jenkins
+
+plugin for nexus - nexus platform then install without restart then Manage jenkins >system > nexus > give the details of nexus hosted on ec2 > give the username and password then test the connection > then create a new job
+
+
+difference b/w build periodically, webhook and poll scm
+
+what is slack - message app 
+
+Role based authorization strategy  - Manage the users(user management)
+How to take the backup and restore the jenkins - install the backup plugin and we can restore outta it, we can also backup up ebs volumes 
+what is restart , saferestart ,copy and move Jenkins job
+
+jenkins upstream and downstream jobs
+can be configured in configure > postbuild actions in the dropdwon of Add postbuild action(opt the build other projects´ ) under a specific job(A - for example)
+If there are three jobs A, B and C then A is upstream to B and B is upstream to C and for downstrean it's vice-versa
+
+setting up the build pipeline
+build pipeline plugin should be installed
+
+Master and slave node in jenkins
+Master node means running on same server   but slave node, we can run the specific job in desired server - where it releives the burden on Master
+slave node can be setup on linux as well as windows machine
+Master node > Manage jenkins > Nodes
+
+setting up the linux slave in jenkins
+
+what is jenkins pipeline, jenkinsfile, benefits of jenkins and types of syntaxes in jenkins

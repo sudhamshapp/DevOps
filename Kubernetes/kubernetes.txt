@@ -110,3 +110,94 @@ fluentd is available in all worker nodes
 
 For Daemonsets, replicas won't work.
 sidecar container
+
+
+
+
+==========================================================================================================
+
+kubectl - cli tool to interact with eks on aws form our mac
+kubectl version --short --client - helps know the client
+eksctl - helps creating eks cluster on aws
+eksctl version - helps know the client
+
+========================================
+Create your cluster and nodes
+
+eksctl create cluster --name cluster-name  \
+--region region-name \
+--node-type instance-type \
+--nodes-min 2 \
+--nodes-max 2 \ 
+--zones <AZ-1>,<AZ-2>
+example:
+eksctl create cluster --name valaxy-cluster \
+--region ap-south-1 \
+--node-type t2.small  - no need of back slash at the end of command if it's a last line
+
+connect to the cluster
+aws eks --region <your-cluster-region> update-kubeconfig --name <your-cluster-name>
+
+deleting the cluster
+eksctl delete cluster <cluster-name> --region<region-name>
+
+==========================================
+To delete the EKS clsuter
+eksctl delete cluster valaxy --region ap-south-1
+
+
+Validate your cluster using by creating by checking nodes and by creating a pod
+kubectl get nodes
+kubectl run pod tomcat --image=tomcat 
+
+
+=================
+eksctl get cluster --region us-west-2
+kubectl apply -f file.yaml - manifest/defintion files 
+kubectl get nodes -here nodes means worker nodes (worker nodes maeans ec2 instances running under the eks cluster)
+kubectl get pods -A (helps displaying all pods in all namespaces)
+kubectl get pods (helps shows the pods in the current namespace)
+kubectl get pods -o wide
+kubectl get nodes -o wide(displays the workernodes(ec2-instance's public and private ip))
+kubectl get deployments
+kubectl get replicasets
+kubectl get service
+kubectl run pod <arbitary> --image=tomcat --port=80
+kubectl describe pod <name-of-the-pod>
+kubectl port-forward <pod_name> <local_port>:<pod_port>
+kubectl get all -A (helps displaying all the workloads)
+kubectl describe pod <podn-ame> (here describe is like inspect in docker)
+kubectl describe deploy <deployments-name> 
+kubectl describe service <service-name>
+kubectl describe replicaset <replicaset-name>
+kubectl edit deployment <deployment-name>  - it opens the vim editor, we can edit the copies of pods we desired(we can edit the stuff on the fly)
+
+kubectl delete pod<pod_name>
+kubectl delete -f . deletes all the stuff in a go
+
+kubectl get pods -w - helps letting know the status of pod i.e., terminating/running/pending(here w indicates wait, reflects the activity status of pod)
+kubectl get svc -w - helps reflecting in the stuff on the go
+
+ingress controller(fantastic-stuff) installation hierarchy
+kubectl create namespace ingress-nginx
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.1/deploy/static/provider/cloud/deploy.yaml
+kubectl get all -n ingress-nginx (displays pods/deployments/Service in the namespace of ingress-nginx)
+kubectl get ingress
+kubectl get service -n ingress-nginx
+
+congigmap
+kubectl get configmap
+kubectl describe cm <configmap-name>
+kubectl get secret
+kubectl describe secret
+
+Namespace
+kubectl get namespaces
+kubectl get all -n kube-system (-n refers the namespace)(here all includes pod/deployment/service/configmaps/service)
+kubectl get all -n default/ kubectl get all(by default the commands executed from default namespace)
+kubectl create namespace <arbitary-name>
+==============================
+
+
+
+
