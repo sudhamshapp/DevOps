@@ -1,21 +1,11 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nginx-deployment
-  labels:
-    app: nginx
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: nginx
-  template:
-    metadata:
-      labels:
-        app: nginx
-    spec:
-      containers:
-      - name: nginx
-        image: nginx:1.14.2
-        ports:
-        - containerPort: 80
+---
+- hosts: ansible
+  tasks:
+  - name: building the docker image
+    command: docker build -t reagapp:latest .
+    args:
+      chdir: /opt/docker
+  - name: create a tag to push onto dockerhub
+    command: docker tag reagapp:latest sudhamshapp/reagapp:latest
+  - name: push image onto dockerhub
+    command: docker push sudhamshapp/reagapp:latest  

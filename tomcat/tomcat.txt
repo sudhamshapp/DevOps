@@ -4,6 +4,7 @@ we specifically install tomcat 7.0.106 because java-1.8.0 has compatibility
 for tomcat 8/9 version, java 10/11 can be compatiblie
 installation steps
 sudo yum install java-1.8.0-openjdk-devel -y
+
 java -version  
 Download the tomcat tar file - 
 https://archive.apache.org/dist/tomcat/tomcat-7/v7.0.106/bin/apache-tomcat-7.0.106.tar.gz
@@ -64,3 +65,44 @@ systemctl restart tomcat1.service
 
 deploy the war file on tomcat
 cp stuuf.war onto /opt/tomcat/webapps - stuff is reflected on tomcat UI
+
+======================================================================================================================
+
+amazon-linux-extras java-openjdk11 -y
+
+https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.79/bin/apache-tomcat-9.0.79.tar.gz
+
+tar -xvzf apache-tomcat-9.0.79
+
+find / -name context.xml
+
+in this update the
+
+/opt/tomcat/webapps/host-manager/META-INF/context.xml - comment the values 127 stuff
+/opt/tomcat/webapps/manager/META-INF/context.xml - comment the values 127 stuff
+
+
+cd /opt/tomcat/conf then update the below stuff in the tomcat-users.xml
+
+
+
+
+<role rolename="manager-gui"/>
+<role rolename="manager-script"/>
+<role rolename="manager-jmx"/>
+<role rolename="manager-status"/>
+<user username="sudhamsh" password="tomcat" roles="manager-gui, manager-script, manager-jmx, manager-status"/>
+<user username="deployer" password="deployer" roles="manager-script"/>
+<user username="sudhamsh" password="tomcat" roles="manager-gui"/>
+
+
+ln -s /opt/tomcat/bin/startup.sh /usr/local/bin/tomcatup
+ln -s /opt/apache-tomcat-<version>/bin/shutdown.sh /usr/local/bin/tomcatdown
+tomcatup
+
+
+Integrate tomcat with jenkins
+install deploy to container
+configure tomcat server with creds
+
+Add the credentials Managejenkins>credentials

@@ -63,6 +63,8 @@ Next we need to tell the jenkins UI regarding the maven and java path
 install the maven plugin
 ====================================================================
 
+configuring with the docker host
+
 
 jenkins dashboard trip
 in jenkins item/project/job refers the same

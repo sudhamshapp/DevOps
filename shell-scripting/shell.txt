@@ -26,3 +26,60 @@ vi /etc/hostname(give the desired hostname and restart) - helps set the hostname
 
 
 histroy | grep -i helm
+
+
+vi /etc/hostname then enter your desired name, then reboot the server
+
+cat /etc/passwd - displays the users
+
+useradd dockeradmin
+passwd dockeradmin
+set the password
+
+cat /etc/group - displays the group
+
+[root@tomcat ~]# id dockeradmin(arbiatry user)
+uid=1001(dockeradmin) gid=1001(dockeradmin) groups=1001(dockeradmin)
+usermod -aG docker dockeradmin - adding the dockeradmin(user) to the group
+
+Ec2 instances doesn't allow the password based authentication, we should explicitly enable it using vi /etc/ssh/sshd_config then /Password comment and uncomment then server sshd reload
+if we wanna login with the user that we created ssh -i "sudhamsh-dev.pem" dockeradmin@ec2-34-212-239-241.us-west-2.compute.amazonaws.com
+can't I login without password, yes we can for that we need to create the ssh keys 
+login to the user we create, in our case dockeradmin then ssh-keygen then we may find our keys under .ssh directory(has public and private key)
+
+[dockeradmin@tomcat ~]$ ll
+total 4
+-rw-rw-r-- 1 dockeradmin dockeradmin 2366 Aug 18 13:16 webapp.war
+[dockeradmin@tomcat ~]$ exit
+logout
+Connection to ec2-34-212-239-241.us-west-2.compute.amazonaws.com closed.
+[ec2-user@tomcat ~]$ sudo su -
+Last login: Fri Aug 18 11:31:31 UTC 2023 on pts/0
+[root@tomcat ~]# ls
+[root@tomcat ~]# mkdir docker
+[root@tomcat ~]# ll
+total 0
+drwxr-xr-x 2 root root 6 Aug 18 13:26 docker
+[root@tomcat ~]# chown -R dockeradmin:dockeradmin docker
+[root@tomcat ~]# ll
+total 0
+drwxr-xr-x 2 dockeradmin dockeradmin 6 Aug 18 13:26 docker
+[root@tomcat ~]# cd docker/
+[root@tomcat docker]# ls
+[root@tomcat docker]# ll
+total 0
+[root@tomcat docker]# ls -ld
+drwxr-xr-x 2 dockeradmin dockeradmin 6 Aug 18 13:26 .
+[root@tomcat docker]# vi Dockerfile
+[root@tomcat docker]# ls -ltr
+total 4
+-rw-r--r-- 1 root root 130 Aug 18 13:30 Dockerfile
+[root@tomcat docker]# chown -R dockeradmin:dockeradmin docker
+chown: cannot access ‘docker’: No such file or directory
+[root@tomcat docker]# pwd
+/root/docker
+[root@tomcat docker]# chown -R dockeradmin:dockeradmin /root/docker
+[root@tomcat docker]# ls -ltr
+total 4
+-rw-r--r-- 1 dockeradmin dockeradmin 130 Aug 18 13:30 Dockerfile
+[root@tomcat docker]# 

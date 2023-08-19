@@ -1,0 +1,45 @@
+apiversion: apps/v1
+kind: Deployment
+metadata:
+  name: sid
+  labels:
+    app: myapp      
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: sudhamsh
+        image: sudhamshapp/reagapp
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxSurge: 1 
+    maxUnavailable: 1
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp
+  labels:
+    app: myapp
+spec:
+  selector:
+    app: myapp
+  ports:
+  - port: 8090
+    targetPort: 8080
+  type: LoadBalancer  
+

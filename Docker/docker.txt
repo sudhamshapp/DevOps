@@ -131,3 +131,12 @@ docker run -it --name srv04 -v testvol1 :/data centos
 # we can also create the volume parallel to the container
 docker run -it –-name srv05 -v "$(pwd)":/data1 centos - here pwd refers to the path where the file exists, we need try
 this above command where the file exists
+
+
+docker container prune - for deleting the stopped containers
+docker image prune -a - deletes the docker images
+
+docker images 
+docker login
+docker tag 35d197d3903f(image-id)/image name sudhamshapp/regapp:v1, docker build -t sudhamshapp/arbitary .
+docker push sudhamshapp/regapp:v1

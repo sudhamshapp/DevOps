@@ -1,6 +1,9 @@
+default innventory file /etc/ansible/hosts
+
+
 ANSIBLE INSTALLATION 
-sudo amazon-linux-extras epel
-sudo amazon-linux-extras ansible2
+sudo amazon-linux-extras install epel -y
+sudo amazon-linux-extras install ansible2 -y
 ansible --version
 
 control node(ansible installed machine) should have acces to managed nodes through password less authrntication
@@ -27,4 +30,24 @@ ansible all -m ping (test the connection b/w the control node and target systems
 
 ansible-playbook user.yml -i hosts --check
 ansible-playbook user.yml -i hosts --syntax-check
+ansible-playbook user.yml --limit localhost/privateip
 
+
+
+
+
+
+Installation of Ansible 
+provision ec2
+setup hostname
+create ansadmin user`
+Add user to the sudoers file - so the ansadmin get the administrative privileges - visudo is the command then ansadmin ALL=(ALL)       NOPASSWD: ALL - helps execute any command without password
+vi /etc/ssh/sshd_config then comment the stuff
+service sshd reload
+generate ssh keys - key based authentication, for whatever server we wish to access we need to copy id_rsa.pub onto target  system, on target system on which location we need to copy? we get to know bro
+enable password based login
+install ansible
+
+
+ssh-copy-id 172.31.29.98 - helps connect with docker host from ansible server
+the ansible server and docker host should have the same user

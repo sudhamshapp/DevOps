@@ -1,2 +1,4 @@
 github plugin - This plugin integrates GitHub to Jenkins.
 Maven Integration - This plugin provides a deep integration between Jenkins and Maven. It adds support for automatic triggers between projects depending on SNAPSHOTs as well as the automated configuration of various Jenkins publishers such as Junit.
+Deploy to container - This plugin allows you to deploy a war to a container after a successful build. 
+Publish Over SSH - Send build artifacts over SSH
