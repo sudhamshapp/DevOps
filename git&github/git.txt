@@ -1,3 +1,11 @@
+git workflow - working directory(git add)>staging area(git commit)>local(git push)then remote
+
 generating ssh key on linux and adding onto github
 ssh-keygen -t ed25519 -C "sudhamsh1996@gmail.com"
 cat ~/.ssh/id_ed25519.pub - it spits the id puton github
+
+
+Feautre branching strategy 
+in here first we have a main branch from main branch we create a development branch from development we creata a multiple feautre branches, based on modules we create the feautre branch, based on the application size we create the feature branches,
+once feature branch completes, it's merged back to the development branch, from development branch we deploy on to the lower environments(dev, qa, uat), then we merge the development branch to the mmaster, then master branch is deployed into production.
+in case if we get any issue in production, we create a hotfix-branch ontop of main branch
