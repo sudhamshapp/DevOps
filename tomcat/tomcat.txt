@@ -21,6 +21,11 @@ we can startup the tomcat by using  this command, it can be find on bin - sh sta
 we can now access from internet
 
 
+find / -name context.xml, you find these below files, comment the couple of lines <!-- --> on valve classname and ip stuff
+/opt/tomcat/webapps/host-manager/META-INF/context.xml
+/opt/tomcat/webapps/manager/META-INF/context.xml
+
+
 types of roles available in tomcat, tomcat manager apps and tomcat host - give the gui access
 tomcat-users.xml - /opt/tomcat/conf - these below lines should keep under tomcat users tag
 <role rolename="manager-gui" />
