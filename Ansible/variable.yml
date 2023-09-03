@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  vars: # can be used this in the entire playbook
+    packages: wget, git, tree
+  tasks:
+    - name: installing the stuff
+      yum: name={{packages}} state=present  

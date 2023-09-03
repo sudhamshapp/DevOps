@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  tasks:
+    - name: installation stuff
+      yum: name=git state=present
+      tags:
+        - git
+    - name: installation stuff
+      yum: name=telnet state=present
+      tags:
+        - telnet

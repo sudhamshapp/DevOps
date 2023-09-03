@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  tasks:
+    - name: installation of git
+      yum: name=git state=present
+    - name: installation of httpd
+      yum: name=httpd state=present  

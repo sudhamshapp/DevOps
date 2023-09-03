@@ -8,4 +8,52 @@ cat ~/.ssh/id_ed25519.pub - it spits the id puton github
 Feautre branching strategy 
 in here first we have a main branch from main branch we create a development branch from development we creata a multiple feautre branches, based on modules we create the feautre branch, based on the application size we create the feature branches,
 once feature branch completes, it's merged back to the development branch, from development branch we deploy on to the lower environments(dev, qa, uat), then we merge the development branch to the mmaster, then master branch is deployed into production.
-in case if we get any issue in production, we create a hotfix-branch ontop of main branch
+in case if we get any issue in production, we create a hotfix-branch ontop of main branch and can be referenced onto the other resource-type
+
+
+
+working directory > staging area > local repo > remote repo
+git log --oneline
+git add .
+git status
+git commit -m "commit message"
+
+git branch
+git branch <branch-name>
+git checkout <branch-name>
+git checkout -b <branch-name>
+git branch -d <branch-name>
+
+when we create a branch from existing branch we get a copy of that branch, when we add something onto branch, should be added and then committed to local-repo, if we don't add and commit it gets reflected on all branches
+git remote -v - desplays the repo on which we're working
+git remote set-url origin <github-url>  - helps add the desired repo onto our local
+
+git clone <github-url-https> -b <branch-name> if we wanna clone the specific branch
+
+git pull - pulls the code from github as well as the commit history - syncs the remote-repo with local-repo(pulls all the changes into working directory)
+
+git fetch  - it creates a branch with latest commit-id, although we din't see the changes unless we checkout to the latest commit
+git checkout <commit-id> - this should merge the stuff on our local
+git pull origin <branch-name>
+
+s3://personnel-bucket-of-sudhamsh/DevOps-and-Cloud-Resume-of-Sudhamsh.pdf
+https://personnel-bucket-of-sudhamsh.s3.us-west-2.amazonaws.com/DevOps-and-Cloud-Resume-of-Sudhamsh.pdf
+git merge(shows proper history, what was inserted, removed), git rebase(just shows the success message) both are same 
+git reset --soft commitid - it moves specific commitid files to staging area
+git reset --mixed commitid/git reset commitid  - the specific commitid files to working directory
+git reset --hard commitid - it deletes the previous commit-ids(ofcourse it has all files) - not recommended
+
+git revert - type of undo operation(git revert commitid)
+
+.gitignore (vi .gitignore(include the file extensions that needs to excluded while pushing onto github))
+git diff  - shows the content in a file whether it's added or deleted (git diff <filename>)
+
+git branching strategy
+Feature branching - Main>Development(branch)>Feature-1(branch)>adding the modules onto feature-1>then PR from feature-1 to Development>then deploying the stuff of Development to lower environments(dev, pre-prod), if everything goes well then >raisea a PR from Development to main for deploying onto production> then if a bug happens onto production> create a hot-fix branch> then raise a PR from hotfix to main 
+Release branching - main-release.2023.08.1(year, month, relaease-number)adding the code onto release.2023.08.1 and deploying onto dev, qa and uat then onto prod> PR from release.2023.08.1 to main, if a bug(issue with the code) gets triggerred onto prod we a create a hotfix.release.2023.08.1 then points to the prod or else raise a PR from hotfix.release.2023.08.1 to main
+
+
+
+
+
+

@@ -1,0 +1,86 @@
+ANSIBLE INSTALLATION 
+sudo amazon-linux-extras install epel -y
+sudo amazon-linux-extras install ansible2 -y
+ansible --version
+ansible default location - /etc/ansible/hosts
+
+ANSIBLE INSTALLATION on ubuntu
+apt update
+apt install ansible
+
+
+
+control node(ansible installed machine) should have acces to managed nodes through passwordless authrntication
+Inventory/hostfile has (list of managed nodes info i.e., private IPs)
+playbooks - these are actual tasks need to be executed on target systems/manged nodes
+Tasks: unit of action in ansible
+
+
+PERFORM ALL THIS STUFF AS A ROOT USER
+create a useradd ansadmin, passwd ansadmin then cat /etc/passwd - helps list the users
+visudo - here add ansadmin under the root and paste the stuff like ALL NOPASSWORD=ALL (shift+g to go end of line, and / to search specific stuff)
+Enable password based authentication 
+/etc/ssh/sshd_config (search using /Password)
+i) uncomment the Password authentication=yes
+ii)comment the Password authentication=no
+service/systemctl sshd restart
+
+
+SWITCH TO THE ANSADMIN (sudo su - ansadmin)
+ssh-keygen (press enter)
+the keys gonna stored in the .ssh directory
+we gonna copy rsa-public key onto target systems(ssh-copy-id private IP of target systems)
+ansible all -m ping (test the connection b/w the control node and target systems)
+
+ansible-playbook user.yml -i hosts --check
+ansible-playbook user.yml -i hosts --syntax-check
+
+ad-hoc commands - to run a single task we use the ad-hoc commands (installation of git, httpd)
+Three ways to use ansible ad-hoc commands
+using modules/command(yum/copy) and arguments, using modules, using arguments
+
+ad-hoc commands with module and arguments
+ansible localhost -m yum -a "name=git state=present" (-m module, -a arguments, state=present/absent/latest)
+ansible localhost -m yum -a "name=httpd state=present"
+rpm -qa | grep httpd - we can check the installation
+
+ansible localhost/all -m ping (m means module)
+ansible localhost -a "yum install tree -y"(a - arguments)
+ansible localhost -a "yum remove git* -y"
+
+Different ways to setup ssh connection
+Manually copying pem-key(public-key) from one server to another
+ssh-copy-id
+
+ansible-playbook git-playbook.yml --list-hosts
+ansible-playbook git-playbook.yml --syntax-check
+
+Exploring with_items - used for looping
+variables - reference the yaml file
+
+Exploring the tags - if we wanna run the specific task from a playbook, the tags come into picture
+ansible-playbook tags.yml --tags telnet, wget (here we can keep the single or multiple tasks)
+ansible-playbook tags.yml --skip-tags telnet (it skips the telnet and runs all the tasks in a playbook)
+
+ansible-playbook -i /opt/hosts playbook.yml(if we set the host file on different path, we should call it like this)
+ansible-galaxy init httpd - creates a role
+defaults, files, handlers, meta, tasks, templates, tests, vars
+
+
+installation of httpd using ansible role
+
+After aligning the tasks onto tasks/main.yml and file onto files directory, this should be inserted in another yaml file then include the role for example httpd, check role.yml
+when condition based
+register - when we wanna store the variables temporarily
+
+Ansible vault used for encryption and decryption
+ansible-vault create <filename> the enter password - for newly created file
+ansible-decrypt <filename>
+ansible-vault view <filename> - content of the file is seen without the decryption
+ansible-vault rekey <filename> - to reset the password
+
+ansible-plabook <file.yml> --ask-vault-pass to run the encrypted playbook
+ansible-plabook <file.yml>  --vault-password-file /opt/<filename(which has password)>
+
+
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDEF0J8gJmt3w62g7/OPo76CDrbYdWe/Sxe2ARrqzJNgIevoiH7S29b70Ssnjp+egPgyVGLxEXmkUCBws/g20KmfsNuUtl2xunq8yf4ty3NiKS2PdO75txoxUTe0IBN0KrEL8isLh1EQEIWCh+WbYrBIGVHJryvklMzwElgit2En3GKz0B9hLUXPkSAeaqN3GJSY1b/JFE7Wd2XfQcgbExBhCnz3mzbM0wLzJvr+7gUCwEyTnPOHGElWWEBqLNNf85EVOJJ1lKN/XragKOZ5Xf+voVgwoeUdcf7w/UtR/QfZCpwaedDqnolr/nB23cJVmVw3llb4T0rwVr6g1HMa7YR sudhamsh@ip-172-31-17-5.us-west-2.compute.internal

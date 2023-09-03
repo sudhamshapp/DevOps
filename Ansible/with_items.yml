@@ -1,0 +1,7 @@
+---
+ - hosts: localhost
+   tasks:
+     - name: installing the softwares
+       yum: name={{item}} state=present
+       with_items: # can be used this in the specific task, not outta the different task
+         - [git, wget, httpd, tree] 

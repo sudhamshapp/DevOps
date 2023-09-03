@@ -1,0 +1,24 @@
+---
+- hosts: sudhamsh
+  tasks:
+    - name: installation of httpd
+      yum: name=httpd state=present
+    - name: copying the host from host
+      copy: src=index.html dest=/var/www/html/index.html
+    - name: start the httpd server
+      service: name=httpd state=started
+
+
+
+
+
+
+
+
+
+- name: installation of httpd
+  yum: name=httpd state=present
+- name: copying the host from host
+  copy: src=index.html dest=/var/www/html/index.html
+- name: start the httpd server
+  service: name=httpd state=started
