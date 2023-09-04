@@ -6,23 +6,23 @@ cat ~/.ssh/id_ed25519.pub - it spits the id puton github
 
 
 Feautre branching strategy 
-in here first we have a main branch from main branch we create a development branch from development we creata a multiple feautre branches, based on modules we create the feautre branch, based on the application size we create the feature branches,
-once feature branch completes, it's merged back to the development branch, from development branch we deploy on to the lower environments(dev, qa, uat), then we merge the development branch to the mmaster, then master branch is deployed into production.
+in here first we have a main branch, from main branch we create a development branch, from development we creata a multiple feautre branches, based on modules we create the feautre branch, based on the application size we create the feature branches,
+once feature branch completes, it's merged back to the development branch, from development branch we deploy on to the lower environments(dev, qa, uat), then we merge the development branch to the mmaster, then master branch is deployed onto production.
 in case if we get any issue in production, we create a hotfix-branch ontop of main branch and can be referenced onto the other resource-type
 
 
 
 working directory > staging area > local repo > remote repo
-git log --oneline
+git log --oneline - shows the commit-id concise
 git add .
 git status
 git commit -m "commit message"
 
-git branch
-git branch <branch-name>
-git checkout <branch-name>
-git checkout -b <branch-name>
-git branch -d <branch-name>
+git branch - displays the the current branch with aterisk
+git branch <branch-name> - creates the branch
+git checkout <branch-name> - helps switching the branch
+git checkout -b <branch-name> - helps create the branch as well as switches the branch
+git branch -d <branch-name> - deletes the branch
 
 when we create a branch from existing branch we get a copy of that branch, when we add something onto branch, should be added and then committed to local-repo, if we don't add and commit it gets reflected on all branches
 git remote -v - desplays the repo on which we're working
@@ -32,18 +32,30 @@ git clone <github-url-https> -b <branch-name> if we wanna clone the specific bra
 
 git pull - pulls the code from github as well as the commit history - syncs the remote-repo with local-repo(pulls all the changes into working directory)
 
-git fetch  - it creates a branch with latest commit-id, although we din't see the changes unless we checkout to the latest commit
-git checkout <commit-id> - this should merge the stuff on our local
+git fetch  - it creates a branch with latest commit-id, although we don't see the changes unless we checkout to the latest commit
+git checkout <latest-commit-id> - this should merge the stuff on our local
 git pull origin <branch-name>
 
 s3://personnel-bucket-of-sudhamsh/DevOps-and-Cloud-Resume-of-Sudhamsh.pdf
 https://personnel-bucket-of-sudhamsh.s3.us-west-2.amazonaws.com/DevOps-and-Cloud-Resume-of-Sudhamsh.pdf
 git merge(shows proper history, what was inserted, removed), git rebase(just shows the success message) both are same 
+
+
+In Git, the git reset command is used to manipulate the commit history and the staging area by moving the HEAD and branch pointers to a specified commit. It's a powerful command with several options, and its primary purpose is to undo or adjust previous commits and their associated changes. Here are some common use cases for git reset(soft, mixed and hard)
+# Soft reset to undo the last commit but keep changes staged for a new commit
+git reset --soft HEAD~1
+
+# Mixed reset (default) to unstage changes but keep them in the working directory
+git reset HEAD
+
+# Hard reset to completely discard changes and reset to a specific commit
+git reset --hard <commit_hash>
 git reset --soft commitid - it moves specific commitid files to staging area
 git reset --mixed commitid/git reset commitid  - the specific commitid files to working directory
 git reset --hard commitid - it deletes the previous commit-ids(ofcourse it has all files) - not recommended
 
 git revert - type of undo operation(git revert commitid)
+In summary, git revert is a useful command for safely undoing changes in Git repositories without altering the commit history.
 
 .gitignore (vi .gitignore(include the file extensions that needs to excluded while pushing onto github))
 git diff  - shows the content in a file whether it's added or deleted (git diff <filename>)
