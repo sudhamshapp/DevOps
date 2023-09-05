@@ -10,7 +10,7 @@ apt install ansible
 
 
 
-control node(ansible installed machine) should have acces to managed nodes through passwordless authrntication
+control node(ansible installed machine) should have access to managed nodes through passwordless authentication
 Inventory/hostfile has (list of managed nodes info i.e., private IPs)
 playbooks - these are actual tasks need to be executed on target systems/manged nodes
 Tasks: unit of action in ansible

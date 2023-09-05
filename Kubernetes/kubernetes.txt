@@ -185,7 +185,7 @@ kubectl get all -n ingress-nginx (displays pods/deployments/Service in the names
 kubectl get ingress
 kubectl get service -n ingress-nginx
 
-congigmap
+configmap
 kubectl get configmap
 kubectl describe cm <configmap-name>
 kubectl get secret
@@ -197,6 +197,19 @@ kubectl get all -n kube-system (-n refers the namespace)(here all includes pod/d
 kubectl get all -n default/ kubectl get all(by default the commands executed from default namespace)
 kubectl create namespace <arbitary-name>
 ==============================
+
+
+
+
+
+
+kubectl get all -A
+kubectl edit deploy my-deployment - opens the vi editor, this command is used edit the deployment on the fly
+kubectl get po -w (w stands for wait/watch, prints background activity of pod)
+kubectl get nodes -o wide displays the worker-node/ec2 private and external ip(the external/public-IP of worker node and and the nodeport portnumber number i.e., 30000-32767, for example public-ip of ec2 instance and port number of nodeport)
+kubectl get po -o wide - displays the pod Ips
+kubectl delete po <pod-name>
+
 
 
 
