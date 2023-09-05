@@ -1,0 +1,145 @@
+In terraform there are two types in provider documentation resources(provisions the infrastructure) and data sources(fetch the existing infrastructure from the aws UI)
+
+Implementing s3 backend for terraform
+challanges with statefile locking
+Integrating dynamodb with s3 for state locking
+
+Iac - it's an approach to managing and provisioning infrastructure resources using machine readable configuration files, rather than direct human intervention
+Types of configuration files
+.tf and .tf.json (terraform can handle and process both formats seamlessly)
+
+Resources can be VMs, IAM, networks, Databases, security groups, load balancers and more
+Arguments are used to provide the necessary information for creating or configuring resource, such as ami, instance type, subnet id or disk size
+Attributes(if we wanna print the output values) on the other hand, are values returned by the provider after the resource is created, such as assigned IP address or unique identifier
+terraform init  - initializes the working directory that contains terraform configuration files and downloads the necessary plugins associated with specifc provider, this plugin enables terraform to interact with provider's API and provision the resources
+Each directory with terraform configuration files should be initialized separately
+terraform validate - specifically checks the syntax and structure of terraform configuration, ensures that is valid and properly formatted within the local not on remote
+terraform plan - it allows us to preview the changes that terraform will apply without actually modifying any real resource or altering the state
+terraform apply - applies the changes specified in the terraform configuration files and bring the infrastructure to desired state
+terraform destroy - used to dismantle and destroy the infrastructure managed by terraform
+added, changed, and destroyed
+terraform destroy -auto-approve
+terraform apply -auto-approve
+terraform.tfsate - keeps on changing based on the configuration apply and tells the current state
+
+saving terraform plan to a file(terraform plan -out=<filename>)/terraform plan -out=ec2.tfplan, this file can be later used by passing it as an argument to the terraform apply command(terraform apply <filename>)
+this two step workflow is particularly useful when running terraform in an automated environment or as part of CI/CD pipeline
+
+
+understanding attributes and output values in terraform
+output values  - helps to extract and display specific attributes of resources
+
+understanding terraform statefile
+Maintains a statefile that serves as a record of infrastructure being managed by terraform
+
+
+Interview scenario question 
+we have a statefile in our local, you performed terraform apply, at the same time my team member also ran the terraform apply, they also have the same statefile, what happens? by default one statefile gets locked, we can also disable this using -lock=false(but not recommended)
+
+terraform fmt - analyze existing configuration files and rewrite them according to a canonical format, enahances readability and maintainability of terraform code
+
+Debugging in terraform - https://developer.hashicorp.com/terraform/internals/debugging
+terraform has detailed logs, we can enable by setting TF_LOG environment variable to any value
+You can set TF_LOG to one of the log levels(in order of decreasing verbosity), TRACE, DEBUG, INFO, WARN OR ERROR to change verbosity of the logs
+export TF_LOG=TRACE then export then do a terraform plan
+if we use TRACE we get all the stuff like DEBUG, INFO and ERROR
+export TF_LOG=DEBUG then export then terraform plan
+export TF_LOG=WARN then export then do a terraform plan
+export TF_LOG=ERROR then export then do a terraform plan
+
+we can also set the logs into a file
+export TF_LOG_PATH=terraform.log, this terraform.log file  gets created on our local
+export TF_LOG=JSON then export then terraform apply, the logs get stored as json in terraform.log(arbitary)
+if we don't want the logs
+unset TF_LOG
+unset TF_LOG_PATH
+
+
+what is tfwitch - it's a cli tool provides a convenient way to switch b/w different versions of terraform
+
+Terraform variables
+variable - parameterize our infrastructure configuration and make it more flexible and reusable
+terraform provides several other ways to assign values to variable
+
+i) environment variable - export TF_VAR_instancetype=t2.micro(echo $TF_VAR_instancetype - prints the environment variable), unset TF_VAR_instancetype=t2.micro
+ii) command line flags - terraform plan/apply/destroy -var="instance_type=t2.micro"  this is for applying the command on the fly, overrides the values defined in the configuration file 
+iii)From a file -  terraform plan/apply/destroy --var-file=dev.tfvars in the dev.tfvars we've variable_name=value create a file with a .tfvars extension, we can deploy onto different environments dev/qa/prod
+iv)default variables -  variable "instance_type" {
+    default="t2.micro"
+} 
+
+The order of priority environment variable>command line flags>From a file>default variable
+
+Data types in terraform
+number(integers, float numbers), string(text or alphanumeric), list["sudhamsh", "ashridh", "mars"], maps {name="sudhamsh", age=27}, Bool(true, false) 
+
+count parameter
+count = 5 (gives us 5 instances)
+
+
+splat expression
+the terraform splat expression epresented by [*], is used to extract a list of values from a complex data structure such as list or map
+
+specify the target in terraform
+terraform apply --target aws_instance.instance-2(helps us create the specific resource)
+
+local values in terraform - assign the name to an expression, making it reusable within a module without having to repeat the expression itself, this can help improve readability and maintainability of terraform configurations
+
+
+terraform taint
+you've created a new resource via terraform, and users have made numerous manual changes, both to the infrastructure and inside the server
+there are two ways to deal this
+i)either import the changes to terraform
+ii)delete and recreate the resource
+
+terraform taint aws_instance.webserver-1 - it deletes and creates the instance
+
+data sources - we fetches existing infrastructure that isn't provisioned by terraform
+
+terraform provisioners - used to execute scripts on a resource after it's created or destroyed
+it performs tasks such as installing software, running scripts, executing commands on the provisioned infrastructure
+i) local exec - runs command localy on the machine running terraform, it only supports in fetching the attributes
+ii)remote exec - runs command on the resource after it has been created
+
+
+terraform workspace
+workspace allow you to manage multiple instances of same infrastructure concurrently, each with it's own state(separate statefile for dev, qa and prod)
+terraform workspace list
+terraform workspace new - creates a workspace
+terraform workspace select - switches to desired workspace
+terraform workspace delete
+terraform workspace show - displays the current workspace
+
+
+
+
+terraform modules 
+when using terraform without modules, you define each resource individually in your terraform configuration files
+without modules code is repititive, if you use modules we reuse the code
+Modules consists of collection of terraform files, including .tf files that  defines variables, resources and outputs
+it can also include other files such as scripts or configuration files that are needed to support module functionality
+this allow you to create reusable building blocks for your infrastructure
+Two types of modules
+terraform managed modules
+terraform customized modules(written by us)
+
+Implementing s3 backend(remote backend) in terraform
+it allows us to store terraform statefile in s3 bucket for centralized state management, collabaration and improved security and can be shared easily
+statndard backend type: state storage locking(prevents the concurrent modifications to the infrastructure state)
+enahanced backend type: All features of statndard+Remote management
+By default s3 doesn't provide locking mechanism for that we need to enable state locking by dynamodb
+whenever you perform a write operation terraform, it automatically locks the statefile to prevent conflicts
+this locking mechanism is crucial because, it ensures if multiple people attempt concurrent terraform apply operations on the same infrastructure, it avoids the statefile corruption
+terraform init -reconfigure
+we can also disable the locking using -lock=false(but not reccomended)
+
+aws configure --profile dev
+
+
+10.0.0.0/20
+10.0.0.0/22
+10.0.4.0/22
+10.0.8.0/22
+10.0.12.0/22
+
+Using for_each is particularly helpful when you want to create multiple similar resources without duplicating code or when you need to manage resources that may change or scale dynamically over time. It's a powerful feature that helps you keep your infrastructure code clean and maintainable.
