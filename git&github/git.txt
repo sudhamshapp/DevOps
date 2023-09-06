@@ -1,4 +1,4 @@
-git workflow - working directory(git add)>staging area(git commit)>local(git push)then remote
+git workflow - working directory(git add)>staging area/index area(git commit)>local(git push)then remote
 
 generating ssh key on linux and adding onto github
 ssh-keygen -t ed25519 -C "sudhamsh1996@gmail.com"
@@ -58,7 +58,10 @@ git revert - type of undo operation(git revert commitid)
 In summary, git revert is a useful command for safely undoing changes in Git repositories without altering the commit history.
 
 .gitignore (vi .gitignore(include the file extensions that needs to excluded while pushing onto github))
-git diff  - shows the content in a file whether it's added or deleted (git diff <filename>)
+
+git diff  - shows the content in a file whether it's added or deleted in working directory and staging area
+git diff --staged/git diff --staged HEAD - compares staging area files with local vcs
+git diff HEAD - compares the files in working directory and local vcs
 
 git branching strategy
 Feature branching - Main>Development(branch)>Feature-1(branch)>adding the modules onto feature-1>then PR from feature-1 to Development>then deploying the stuff of Development to lower environments(dev, pre-prod), if everything goes well then >raisea a PR from Development to main for deploying onto production> then if a bug happens onto production> create a hot-fix branch> then raise a PR from hotfix to main 

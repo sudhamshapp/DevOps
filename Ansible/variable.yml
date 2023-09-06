@@ -5,3 +5,17 @@
   tasks:
     - name: installing the stuff
       yum: name={{packages}} state=present  
+
+
+
+
+---
+- hosts: managed-nodes
+  vars:
+    packages: telnet, tree
+  tasks:
+    - name: installing the packages the with vars
+      become: true
+      yum:
+        name: "{{packages}}"
+        state: present

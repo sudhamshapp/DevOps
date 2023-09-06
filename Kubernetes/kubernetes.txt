@@ -211,6 +211,24 @@ kubectl get po -o wide - displays the pod Ips
 kubectl delete po <pod-name>
 
 
+pv, pvc and storage
+
+pod>pvc>pv
+
+consider a case where we mysql db pod which our application pod uses, where our data can be added, modified in the db(refer the bottom line)
+when you restart the db pod all the changes will be gone, there is no data persistence outta the box.
+
+storage doesn't depend on the pod lifecycle
+However, we donno, on which node the pod gets restarted storage must be available on all nodes
+storage needs to survive if the cluster crashes
+
+another use case for persistent storage isn't for db but for a directory
+Maybe you've  a application that writes/reads the files from pre-configured directory(this could be session files or configuration files), you can configure any of these type of storage using kubernetes component called pv
+Think of a persistent volume as a cluster resource just like ram/cpu that used to store data
+PV gets created just like any other component using yaml file(kind:PersistentVolume), PV is just a abstraction component it needs actual physical storage like local disk, nfs, or cloud storage(block storage)
+where does this storage come from and who makes it available to the cluster
+
+pvc must be in the same namespace, but while coming to the pv it's not supposed to be in the specific namespace
 
 
 

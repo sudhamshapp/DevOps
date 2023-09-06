@@ -1,4 +1,5 @@
-In terraform there are two types in provider documentation resources(provisions the infrastructure) and data sources(fetch the existing infrastructure from the aws UI)
+In terraform there are two 
+types in provider documentation resources(provisions the infrastructure) and data sources(fetch the existing infrastructure from the aws UI)
 
 Implementing s3 backend for terraform
 challanges with statefile locking
