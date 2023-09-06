@@ -59,9 +59,10 @@ In summary, git revert is a useful command for safely undoing changes in Git rep
 
 .gitignore (vi .gitignore(include the file extensions that needs to excluded while pushing onto github))
 
-git diff  - shows the content in a file whether it's added or deleted in working directory and staging area
+git diff  - shows the content of a file whether it's added or deleted in working directory and staging area
 git diff --staged/git diff --staged HEAD - compares staging area files with local vcs
 git diff HEAD - compares the files in working directory and local vcs
+git diff HEAD <desired-commitid>
 
 git branching strategy
 Feature branching - Main>Development(branch)>Feature-1(branch)>adding the modules onto feature-1>then PR from feature-1 to Development>then deploying the stuff of Development to lower environments(dev, pre-prod), if everything goes well then >raisea a PR from Development to main for deploying onto production> then if a bug happens onto production> create a hot-fix branch> then raise a PR from hotfix to main 
