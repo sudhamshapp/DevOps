@@ -1,0 +1,17 @@
+argocd official documentation - https://argo-cd.readthedocs.io/en/stable/getting_started/
+kubectl get pods -n argocd -w
+
+kubectl get svc -n argocd - exposes the argocd services
+kubectl edit svc argocd-server -n argocd(one of the service in argocd, edit the cluster-ip to LoadBalancer to access the UI)
+
+kubectl get secret -n argocd
+kubectl edit secret argocd-initiala-admin-secret -n argocd(take the password from it) > then echo <password> | base64 --decode
+
+then go to argocd UI then username admin then password (decrypted password)(now you can be landed on argocd UI)
+
+
+this repo is maintained by argocd
+github argocd example apps - https://github.com/argoproj/argocd-example-apps
+
+if we wanna interact with argocd cli - brew install argocd on mac
+argocd command reference - https://argo-cd.readthedocs.io/en/stable/user-guide/commands/argocd/

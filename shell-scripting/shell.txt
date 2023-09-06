@@ -83,3 +83,11 @@ chown: cannot access ‘docker’: No such file or directory
 total 4
 -rw-r--r-- 1 dockeradmin dockeradmin 130 Aug 18 13:30 Dockerfile
 [root@tomcat docker]# 
+
+
+
+vi /etc/hostname - comment the first line and give it a desired name
+hostname <desired name which you gave above in the /etc/hostname>
+
+git clone  - in case, if a repo isn't exist in our system, it's like a one time operation
+git pull - helps pulling in the changes to our local-repo to get in sync/upto-date with the remote-repo

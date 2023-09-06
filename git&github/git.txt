@@ -64,12 +64,33 @@ git diff --staged/git diff --staged HEAD - compares staging area files with loca
 git diff HEAD - compares the files in working directory and local vcs
 git diff HEAD <desired-commitid>
 
+git show <commitid>
+git annotate <filename>  - shows the history, who has done the changes in a specific file, in the UI we can go to the desired file and click on the blame
+
+git checkout <commitid>  - helps switch to the specific commit-id
+
+git switch - > helps movin to the latest commit
+
+Merge conflict - when a two developers modifies the same line of code in same file
+
+Fork  - arrives onto our github account from another github account
+
 git branching strategy
 Feature branching - Main>Development(branch)>Feature-1(branch)>adding the modules onto feature-1>then PR from feature-1 to Development>then deploying the stuff of Development to lower environments(dev, pre-prod), if everything goes well then >raisea a PR from Development to main for deploying onto production> then if a bug happens onto production> create a hot-fix branch> then raise a PR from hotfix to main 
 Release branching - main-release.2023.08.1(year, month, relaease-number)adding the code onto release.2023.08.1 and deploying onto dev, qa and uat then onto prod> PR from release.2023.08.1 to main, if a bug(issue with the code) gets triggerred onto prod we a create a hotfix.release.2023.08.1 then points to the prod or else raise a PR from hotfix.release.2023.08.1 to main
 
 
 
+git tags - git tags are references that point to specific commit in git history, tagging is generally used to capture a point in history that is used for marked version release(v.1.0.1)
 
+git tag v1.0 - this get associated with latest commit > then git push origin tag v1.0
 
+git tag -a v2.0 6138a5a -m "added the tag to a commit" > git push origin tag v2.0
 
+git restore <filename> / git checkout <filename> restores the file to it's original state - revert changes from working directory
+
+git restore --staged <filename> revert changes from staging area to working directory
+
+git reset HEAD~1(desired commit) - revert changes from local repo to working directory
+
+git rebase - squashes multiple commits to a single commit
