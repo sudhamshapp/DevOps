@@ -1,0 +1,38 @@
+# curl -L http://192.168.47.69:8080/webapp - access this stuff in the worker-node using the ec2 connect, the ip is the pod's ip here not the worker node's ip
+# LoadBalancer  - we directly access using the load-balncer
+# Nodeport - publicIP of worker-node:nodeport-port-number
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-python-app
+  labels:
+    app: sudhamsh-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sudhamsh-dep
+  template:
+    metadata:
+      labels:
+        app: sudhamsh-dep
+    spec:
+      containers:
+      - name: python-app
+        image: sudhamshapp/reagapp:latest
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: sudhamsh-dep
+  ports:
+    - port: 80
+      targetPort: 8080
+      nodePort: 30007
+

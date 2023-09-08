@@ -1,3 +1,5 @@
+kubernets deployments examples - https://github.com/kubernetes/examples
+
 MASTER NODE COMPONENTS
 API server
 kube controller
@@ -135,6 +137,8 @@ eksctl create cluster --name valaxy-cluster \
 --region ap-south-1 \
 --node-type t2.small  - no need of back slash at the end of command if it's a last line
 
+eksctl create cluster --name sudhamsh-eks --region us-west-2 --node-type t2.small
+
 connect to the cluster
 aws eks --region <your-cluster-region> update-kubeconfig --name <your-cluster-name>
 
@@ -230,5 +234,64 @@ where does this storage come from and who makes it available to the cluster
 
 pvc must be in the same namespace, but while coming to the pv it's not supposed to be in the specific namespace
 
+Auto healing - without the manual intervention of a engineer the container should come up (replicaset helps automates this for us)
 
 
+
+
+Abhishek - k8s
+
+WORKER NODE COMPONENTS - executes the actions
+container runtime - which is responsible for running your container, execution enevironment for a container
+kubelet is responsible for creation of pods and ensures the pod is always in running state, if a pod isn't running kubelet informs the API-gateway
+kube-proxy basically provides networking, every pod that we're creating it should be allocated with IP address(we can think of ClusterIP), (provides networking, ip addresses and default load balancing capability)
+
+MASTER NODE COMPONENTS - controls the actions
+API-server - exposes the kubernetes, basically takes all the requests from external world
+sheduler - helps scheduling the pod in a available worker nodes(scheduler receives the info from API-server)
+etcd  - basically a key-value store db (stores the info of the cluster)
+controller manager - maintains the state using replicasets
+ccm(cloud-controller-manager-eks)
+
+
+pod can have one or more than one container(sidecar, init containers - these basically supports the actual container, suppose you've deployed application in a container, and the container wanna read some config files/user related files from another conatiner, or for logging)
+
+No need of byhearting the kubernetes yaml stuff, just aware of where you wanna modify your keys
+
+
+we can ssh into the pod using 
+kubectl exec -it <podname> -- /bin/bash 
+
+we can also check the status of a po using
+kubectl describe pod <podname> it gives the events, on what image pod is running, on which node it's running, what volumes was attached to it
+
+we can also check the logs using 
+kubectl logs <podname>
+
+if we wanna curl the ip of a pod ssh into the worker node > curl <pod-ip>
+
+Deployment - it has the capabilities of auto-healing, auto-scaling and ensures zero downtime
+
+
+Replicaset is a kubernetes controller(which maintains the state, this ensures the auto-healing capability)
+
+kubectl get all
+
+kubectl get all -A - list the resources from all the namespaces
+
+kubectl get rs - for replicaset
+
+deployment creates a replicaset and replicaset create a pod for us
+
+sudhamshapp/reagapp:latest
+
+
+
+pod ideal count depends on the number of concurrent users, for example, if a pod handle the ten requests, for 100 users we need atleast the 10 pods
+
+services won't rely on pod IPs as they're dynamic because of pod lifecycle, it relies on pod's labels
+ClusterIP(inside kubernetes cluster) - inside the kubernetes cluster
+NodePort(accessed via workernodes:(nodeport-Ips)) - to be accessed by your organization or within our network
+LoadBalancer(external world)
+
+kubeshark - practical traffic viewing, helps how traffic is flowing within kubernetes and how one component is talking to the other component
