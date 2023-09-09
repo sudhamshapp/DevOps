@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-python-app
+  labels:
+    app: sudhamsh-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sudhamsh-dep
+  template:
+    metadata:
+      labels:
+        app: sudhamsh-dep
+    spec:
+      containers:
+      - name: python-app
+        image: sudhamshapp/reagapp:latest
+        volumeMounts:
+          - name: db-connection
+            mountPath: /opt
+        ports:
+        - containerPort: 8080
+      volumes:
+        - name: db-connection
+          configMap:
+            name: test-cm

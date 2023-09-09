@@ -1,14 +1,16 @@
 kubernets deployments examples - https://github.com/kubernetes/examples
-
+kubectl exec -it <podname> -- /bin/bash - to go inside the pod
 MASTER NODE COMPONENTS
 API server
 kube controller
 sheduler 
 etcd database
+cloud controller manager
 
 WORKER NODE 
 kubelet 
 kube proxy
+container runtime
 
 https://kubernetes.io/ - kubernetes documentation
 
@@ -209,7 +211,7 @@ kubectl create namespace <arbitary-name>
 
 kubectl get all -A
 kubectl edit deploy my-deployment - opens the vi editor, this command is used edit the deployment on the fly
-kubectl get po -w (w stands for wait/watch, prints background activity of pod)
+kubectl get pods -w (w stands for wait/watch, prints background activity of pod)
 kubectl get nodes -o wide displays the worker-node/ec2 private and external ip(the external/public-IP of worker node and and the nodeport portnumber number i.e., 30000-32767, for example public-ip of ec2 instance and port number of nodeport)
 kubectl get po -o wide - displays the pod Ips
 kubectl delete po <pod-name>
@@ -295,3 +297,56 @@ NodePort(accessed via workernodes:(nodeport-Ips)) - to be accessed by your organ
 LoadBalancer(external world)
 
 kubeshark - practical traffic viewing, helps how traffic is flowing within kubernetes and how one component is talking to the other component
+
+ingress(ingress controller and ingress resource)(acts as a layer7 load balancer)
+we're exposing multiple services(NodePort, ClusterIP, LoadBalancer)(behind the services ofcourse we have the deployments>replicasets>pods) with one ingress on the different paths
+when we opt the service type as LoadBalancer in kubernetes, it provisions the classic load balancer which is a legacy one
+
+For example if we do a deployment using microsoft.com to access it we should create a service 
+For example if we do a deployment using google.com to access it we should create a service 
+For example if we do a deployment using amazon.com to access it we should create a service 
+if above are running as microservices, the requests coming from external world based on the url and path, the ingress picks up the url and forwards to the correct service deployment
+
+ingress resource bridges the gap b/w ingress controller and actual deployments
+
+The highlight stuff is  both ingress controller and ingress resource has the same load balancer i.e., classic load balncer
+# kubectl get svc -n ingress-nginx - to check the ingress controller
+# kubectl get ingress - to check the ingress service
+
+Although we've two applications i.e., nginx and httpd, it created one load balancer instead of two load balancers that is the beauty of ingress controller, we can access the different deployments using a single loadbalancerIP/nginx, loadbalancerIP/httpd 
+
+
+Request comes from external-world>ingress-controller>reads the stuff of ingress-resource> then forwards the traffic to specific deployment
+
+
+
+CONFIGMAPS(non-sensitive-data) & SECRETS(sensitive-data)
+
+How can we gonna refer the configmap/secrets in a pod
+
+for the secrets data is encrypted at rest and for the secrets we can enforce a strong rbac(for the entire resource in kubernetes only a devops engineer should have access to it)
+
+kubectl get cm
+kubectl describe cm <cm-name>
+
+kubectl exec -it <podname> -- /bin/bash - to go inside the pod - takes inside the pod
+env | grep DB - to retrieve specific value that we used in the configmap
+
+changing the environment variables inside the containers isn't possible without a restart, but in the production we shouldn't restart the container, that's why use volume mounts as "files" because we're mounting right, where configmap info saved in a file and developers can read the information from file instead of environment variables
+
+kubernetes won't have great encryption mechanism whenever we're creating the secrets by default use hashicorp vault and some sort of stuff
+How to encrypt etcd for secrets
+
+RBAC(Role Based access control) - directly related to security
+users(iam-user and groups(IAM-OAUTH-PROVIDER))/service(basiscally a pod) accounts, roles/cluster-roles, role-binding/cluster-role-binding
+kubernetes not going manage the users, it offloads to identity providers
+person gets access to the kubernetes cluster without creating a user(if I download a example app, then it automatically asks login with googl/linkedin)
+
+At a high level we will create a service account/user and then we'll create a role, using the role-binding we attach both(service-account/iuser with role)
+suppose, if we're creating a role in a specifc namespace it is called as role, and if we're creating role in the scope of cluster it's called cluster-role, we can relate to role-binding as well
+
+KUBERNETES MONITORING(USING PROMETHEUS AND GRAFANA)
+grafana id -3662
+
+
+CRD - (custom resource defintion)

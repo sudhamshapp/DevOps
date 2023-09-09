@@ -1,6 +1,9 @@
+# Before creating the stuff, must create the namespace as ingress-nginx
 #this url is belongs to ingress controller
+#apply this below url in eks as kubectl apply -f <ingress-controller-url>
 #https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.1/deploy/static/provider/cloud/deploy.yaml
-apiVersion: networking.k8s.io/v1
+# kubectl get svc -n ingress-nginx
+apiVersion: networking.k8s.io/v1 # to check this on kubernetes cluster kubectl get ingress
 kind: Ingress #this is a ingress resource
 metadata:
   name: k8s-ingress
