@@ -46,3 +46,15 @@ Examples(these are complaince for specific projects)  - ec2 monitoring enabled m
 
 periodic(Runs on the frequency that we choose)
 
+
+LAMBDA(serverless compute)(it is automatically created and automatically tear down) - cloud cost optimization, security/complaince
+we can trigger lambda functions with wide range of services(s3) and perform activities which are basically event driven actions
+when should we use the ec2 and lambda functions
+let's say if my organization is using 20 aws resources, we can write the lambda functions to  govern(basically a combo of(monitor and report) )resource usage
+we can also tell the cloudwatch by configuring the cron-job to trigger the lambda function
+lambda function is event driven, it has to be invoked, lambda can't run by itself(basically event could be a cloudwatch event, basically we can tell cloudwatch to trigger at a specfic time)
+when we enable the ENABLE FUNCTION(Use function URLs to assign HTTP(S) endpoints to your Lambda function) radio button in the lambda UI, we get a public IP address for the application that we written in lambda
+if we wanna trigger the lambda function manually we can use the test button, if lambda wanna get invoked by a service we need to ensure trigger is got enabled by a specific service
+
+default execution time for lambda is 3 seconds and max is 15 minutes
+we need to write the steps that we wanna perform in plain english then refer the boto3 documentation
