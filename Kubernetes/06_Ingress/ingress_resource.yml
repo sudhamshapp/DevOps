@@ -2,9 +2,9 @@
 #this url is belongs to ingress controller
 #apply this below url in eks as kubectl apply -f <ingress-controller-url>
 #https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.1/deploy/static/provider/cloud/deploy.yaml
-# kubectl get svc -n ingress-nginx
+# kubectl get svc -n ingress-nginx, spits the load balancer in the aws UI
 apiVersion: networking.k8s.io/v1 # to check this on kubernetes cluster kubectl get ingress
-kind: Ingress #this is a ingress resource
+kind: Ingress #this is a ingress resource, kubectl get ingress, it also spits the load balancer in the aws UI
 metadata:
   name: k8s-ingress
   annotations:

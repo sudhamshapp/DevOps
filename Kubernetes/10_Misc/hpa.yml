@@ -3,7 +3,7 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: nginx
 spec:
-  scaleTargetRef:
+  scaleTargetRef: # this block refers to the desired deployment we wanna scale-out/scale-in
     apiVersion: apps/v1
     kind: Deployment
     name: nginx

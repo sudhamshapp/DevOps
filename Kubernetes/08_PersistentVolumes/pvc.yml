@@ -5,10 +5,13 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: gp2
+  storageClassName: aws-gp2
   resources:
     requests:
       storage: 10Gi
+
+
+
 
 
 

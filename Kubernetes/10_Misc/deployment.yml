@@ -21,5 +21,11 @@ spec:
         resources:
           # You must specify requests for CPU to autoscale
           # based on CPU utilization
-          requests:
-            cpu: "250m"
+          requests: # the min amt of cpu allocated to the pod
+            cpu: "250m" #minimum
+          limits: # when it breaches the limit cluster won't allocate the resources
+            cpu: "500m"  
+          requests: # the min amt of cpu allocated to the pod
+            Memory: "1Gi" #minimum
+          limits:
+            Memory: "4Gi"  

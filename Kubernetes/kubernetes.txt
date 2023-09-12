@@ -350,3 +350,16 @@ grafana id -3662
 
 
 CRD - (custom resource defintion)
+
+Daemonsets - if we wanna deploy system-services(backup-services) or monitoring services on each node as a pod we use daemonsets
+JOBS - it should perform its duties on nodes and depart (kubectl logs <podname>)
+
+HPA  - metric-server-plugin needs to be configured(in some clouds by default it's downloaded)(fixes the performance related issues(based on cpu/memory utilizaton, depending on resource utilization the pod should scaleout/scalein))
+
+For any plugins we can watch out it in default kube-system(kubectl get all -n kube-system)
+
+
+even HPA also has the separate manifest file
+
+
+Cluster AUTOSCALER - scale out/in the number of nodes using the ASG but not a manifest file

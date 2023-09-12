@@ -1,0 +1,48 @@
+user is allocated to a person
+user can authenticate to aws 
+using policies we can authorize services in aws(like list, create the buckets, you can relate)
+user>policies(permissions)
+
+Roles are attached to the service to access the service 
+
+
+EC2 instance-types
+general purpose
+memory optimized
+compute optimized
+storage optimized
+accelerated computing
+hpc optimized
+
+latency - request that travels from one place to another place to get some information from application (b/w servers)
+
+ec2 instance has the public key and we have private key with us(sudhamsh-dev.pem)
+
+VPC
+NACL - Applied at a subnet level(additional layer of security on top of sg)(Deny and Allow Rules)(first layer of defence for a subnet)
+sg - Applied at a instance level(Allow Rules)
+within a subnet, if we wanna assign same security group to multiple servers, automation for sg, instead of assigning same thing again and again, we can define as part of nacl
+NAT gateway - masks the ipaddress when when travelling via route table, nat gateway sits in the public subnet
+
+A user from external world wanna access a resource in a VPC
+user>igw>public-subnet(load-balancer)>Route-tables>security-group>nacl
+
+Bastion Host - 
+the servers sitting in the private subnet won't be having the public-ipaddress, we can't ssh into these servers directly, to access these private servers we create bastion Host in public subnet, with bastion-host we can ssh into the servers sitting in the private subnets
+it's the mediator b/w the server sitting in private subnet and user sitting in public subnet
+bastion-host should be in the same vpc where the private subnet is residing in
+
+container basically a package contains the application code, software and dependencies to run the application
+
+
+secrets mangement on aws:
+systems manager(within the system-manager we've a parameter store(we can store the sensitive information like dockerhub-username and password)aws resources retrives the secrets from parameter-store using iam Roles)
+secrets manager(very-sensitive) for storing DB secrets and API Tokens(it rotates the secrets once in desired days that we configure(90, 30, 2 days))
+
+secerets manger with the parameter store would be a great and cost-effective option
+
+AWS Config(track resource inventory and changes(helps us know what are complaint and non-complaint)) - we can create a rule and integrate it with lambda function
+Examples(these are complaince for specific projects)  - ec2 monitoring enabled must be mandatory, all the s3 buckets that we're creating should have lifecycle mangement rules, tags must be mandatory for the ec2 instances
+
+periodic(Runs on the frequency that we choose)
+

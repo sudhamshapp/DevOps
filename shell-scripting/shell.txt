@@ -91,3 +91,6 @@ hostname <desired name which you gave above in the /etc/hostname>
 
 git clone  - in case, if a repo isn't exist in our system, it's like a one time operation
 git pull - helps pulling in the changes to our local-repo to get in sync/upto-date with the remote-repo
+
+
+scp -i /Users/mars/Documents/hyderabad-devops/aws-essentials/sudhamsh-dev.pem /Users/mars/Documents/hyderabad-devops/aws-essentials/sudhamsh-dev.pem ec2-user@35.91.229.139:/home/ec2-use
