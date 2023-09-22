@@ -94,3 +94,8 @@ git pull - helps pulling in the changes to our local-repo to get in sync/upto-da
 
 
 scp -i /Users/mars/Documents/hyderabad-devops/aws-essentials/sudhamsh-dev.pem /Users/mars/Documents/hyderabad-devops/aws-essentials/sudhamsh-dev.pem ec2-user@35.91.229.139:/home/ec2-use
+
+awk is basically for the string formatting or you wanna get anything from the huge line
+
+Container_id='docker ps | awk -F" "'{print$1}''
+docker rm -f $Container_id

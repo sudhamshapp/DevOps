@@ -94,3 +94,5 @@ git restore --staged <filename> revert changes from staging area to working dire
 git reset HEAD~1(desired commit) - revert changes from local repo to working directory
 
 git rebase - squashes multiple commits to a single commit
+
+At any given point we can go back to the previous version

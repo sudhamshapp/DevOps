@@ -1,0 +1,3 @@
+let say we're using the latest tags, for pushing to the repository and pulling it in deployment
+what else, if we want the specific tag to push and pull in the image during the deployment(to customize the tags, we can use the version-number, date, timestamps, build-number)
+when you're doing the CI, how we're pushing the image, the same we need to pull the image in the CD(if i'm pushing the image the using the latest tag, we need to pull the image using latest tag)
