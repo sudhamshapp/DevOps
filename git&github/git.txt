@@ -69,7 +69,16 @@ git annotate <filename>  - shows the history, who has done the changes in a spec
 
 git checkout <commitid>  - helps switch to the specific commit-id
 
-git switch - > helps movin to the latest commit
+git switch - > helps movin b/w the branches
+git switch -c <desired branch> - creates a branch
+git switch -  -helps move to the previous branch
+
+git branch
+git branch --all(shows the remote branches as well)
+git branch -d <branch name> - deletes the branch
+
+git push origin <branch name>
+
 
 Merge conflict - when a two developers modifies the same line of code in same file
 
@@ -99,9 +108,13 @@ At any given point we can go back to the previous version
 
 this is a test message
 
-git tag
+git tag - shows the tags 
 git tag -a v1.0 -m 'first release'
 
-git show v1.0
+git push origin v1.0
+git show v1.0 - shows for which commitid it's got tagged
+
 
 added the stuff
+
+git log --pretty=oneline
