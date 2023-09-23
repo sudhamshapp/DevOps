@@ -98,3 +98,5 @@ git rebase - squashes multiple commits to a single commit
 At any given point we can go back to the previous version
 
 this is a test message
+
+git tag
