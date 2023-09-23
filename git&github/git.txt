@@ -103,3 +103,5 @@ git tag
 git tag -a v1.0 -m 'first release'
 
 git show v1.0
+
+added the stuff
