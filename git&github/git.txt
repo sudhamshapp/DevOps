@@ -18,7 +18,7 @@ git add .
 git status
 git commit -m "commit message"
 
-git branch - displays the the current branch with aterisk
+git branch - displays the the current branch with asterisk
 git branch <branch-name> - creates the branch
 git checkout <branch-name> - helps switching the branch
 git checkout -b <branch-name> - helps create the branch as well as switches the branch
