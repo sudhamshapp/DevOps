@@ -100,3 +100,6 @@ At any given point we can go back to the previous version
 this is a test message
 
 git tag
+git tag -a v1.0 -m 'first release'
+
+git show v1.0
