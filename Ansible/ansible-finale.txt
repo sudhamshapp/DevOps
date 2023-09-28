@@ -1,0 +1,76 @@
+#ansible installation
+amazon-linux-extras install ansible2 -y
+
+#adding the private IPs of manged nodes on the ansible installed machine(control-node) 
+[root@ip-172-31-23-98 opt]# vi hosts
+[aws-managed-01]
+172.31.25.213
+[aws-managed-01:vars]
+ansible_user=ec2-user
+ansible_ssh_private_key_file=/opt/sudhamsh-dev.pem
+[aws-managed-02]
+172.31.21.82
+[aws-managed-02:vars]
+ansible_user=ubuntu
+ansible_ssh_private_key_file=/opt/sudhamsh-dev.pem
+
+
+#ansible adhoc commands - search on ansible documentation or on chatgpt
+ansible all -i hosts -m ping(adhoc - command)
+ansible all -i hosts -m setup(tells whether ubuntu, and linux belongs to which os_family)
+
+ansible all -i hosts <filename> --list-hosts(lists the hosts)
+ansible all -i hosts <filename> --check(dry-run)
+ansible all -i hosts <filename> --syntax-check
+
+installation of httpd and starting the services then stop the services and uininstall the httpd
+
+Notify and handlers(lets assume without installation of httpd, we can't start the httpd service, if httpd is already installed, notify won't inform to the handler)
+Gather Facts(Retrieve the system information from managed nodes, during the installation, it gonna perform a major task, we can also disable the gather_facts:no under hosts)
+When condition(dependant on gather_facts), list and with_items(with_items are deprecated)
+Ansible variables(we can define within the playbook, we can pass from external files, passing while running playbook via command line)
+Tags(we can restrict our plays if a specific tag is called/invoked)
+Error Handling in Ansible playbook(ignore_errors=yes, if a specific task isn't successful on any of the system, it proceeds further)
+
+Ansible Vault(helps us to reatin the sensitive data such as passwords or keys in encrypted files rather than as plaintext in playbooks or Roles)(create, view, edit, encrypt, decrypt)
+ansible-vault create <filename>
+ansible-vault view <filename>
+ansible-vault encrypt <filename>
+ansible-vault decrypt <filename>
+
+--ask-vault-pass(provide passsword while running plabook)
+--vault-password-file(to pass a vault password through a file)
+
+
+Ansible Roles(Roles let you automatically load related vars, files, tasks, handlers, and other Ansible artifacts based on a known file structure. After you group your content in roles, you can easily reuse them and share them with other users)
+Reusability
+ansible-galaxy init <rolename>
+[root@ip-172-31-23-98 sudhamsh]# tree
+.
+├── defaults
+│   └── main.yml
+├── files
+├── handlers
+│   └── main.yml
+├── meta
+│   └── main.yml
+├── README.md
+├── tasks
+│   └── main.yml
+├── templates
+├── tests
+│   ├── inventory
+│   └── test.yml
+└── vars
+    └── main.yml
+
+8 directories, 8 files
+tasks are mandatory
+
+
+#helps run a playbook
+ansible-playbook -i hosts git.yml(runs a playbook)
+
+ansible module to install the packages for yum - https://docs.ansible.com/ansible/latest/collections/ansible/builtin/yum_module.html
+
+creation of directories or files on target system

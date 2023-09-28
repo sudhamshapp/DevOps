@@ -3,6 +3,8 @@ ps -ef | wc -l -gives the total number of processes
 
 rpm -qa | grep -i nginx (rpm -qa displays the installed packages)
 
+rpm -qa | grep wget
+
 cat /etc/os-release (helps on which os the container is running)
 
 if it's a debian

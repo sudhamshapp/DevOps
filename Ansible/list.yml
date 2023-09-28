@@ -1,0 +1,8 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: installation of multiple packages with a list
+    yum:  
+      name: ['git', 'tree', 'telnet', 'gzip']
+      state: present

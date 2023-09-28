@@ -22,3 +22,17 @@
   copy: src=index.html dest=/var/www/html/index.html
 - name: start the httpd server
   service: name=httpd state=started
+
+
+
+
+
+---
+- hosts: all
+  become: true
+  tasks:  
+  - name: Create a directory if it does not exist
+    file:
+      path: /etc/mars
+      state: directory
+      mode: '0755'

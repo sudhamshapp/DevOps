@@ -65,3 +65,25 @@
 
     - debug:
         var: status
+
+
+
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: installation of tree package
+    yum:
+      name: tree
+      state: present
+
+
+
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: Copy file with owner and permissions
+    copy:
+      src:  /opt/tree.yml
+      dest: /etc/tree.yml

@@ -1,0 +1,15 @@
+# Notify and handlers(lets assume without installation of httpd, we can't start the httpd service, if httpd is already installed, notify won't inform to the handler)
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: installing the httpd on the target server
+    yum:
+      name: httpd
+      state: present
+    notify: installing the httpd
+  handlers:    
+  - name: installing the httpd
+    service:
+      name: httpd
+      state: started

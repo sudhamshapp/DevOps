@@ -1,0 +1,27 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: java installation
+    yum:
+      name: java
+      state: present
+  - name: tomcat installation
+    get_url:
+      url: https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.80/bin/apache-tomcat-9.0.80.tar.gz
+      dest: /opt
+  - name: Extract tomcat
+    unarchive:
+      src: /opt/apache-tomcat-9.0.80.tar.gz
+      dest: /opt
+      remote_src: yes
+  - name: add the execution permission on startup.sh file
+    file:
+      path: /opt/apache-tomcat-9.0.80/bin/startup.sh
+      mode: 0777
+  - name: start the services
+    shell: nohup ./startup.sh
+    args:
+      chdir: /opt/apache-tomcat-9.0.80/bin
+
+      

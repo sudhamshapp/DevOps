@@ -30,6 +30,7 @@ SWITCH TO THE ANSADMIN (sudo su - ansadmin)
 ssh-keygen (press enter)
 the keys gonna stored in the .ssh directory
 we gonna copy rsa-public key onto target systems(ssh-copy-id private IP of target systems)
+also check the connectivity using ssh <private-ip>
 ansible all -m ping (test the connection b/w the control node and target systems)
 
 ansible-playbook user.yml -i hosts --check
