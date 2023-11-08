@@ -338,7 +338,7 @@ kubernetes won't have great encryption mechanism whenever we're creating the sec
 How to encrypt etcd for secrets
 
 RBAC(Role Based access control) - directly related to security
-users(iam-user and groups(IAM-OAUTH-PROVIDER))/service(basiscally a pod) accounts, roles/cluster-roles, role-binding/cluster-role-binding
+users(iam-user and groups(IAM-OAUTH-PROVIDER))/service accounts(basiscally a pod), roles/cluster-roles, role-binding/cluster-role-binding
 kubernetes not going manage the users, it offloads to identity providers
 person gets access to the kubernetes cluster without creating a user(if I download a example app, then it automatically asks login with googl/linkedin)
 
