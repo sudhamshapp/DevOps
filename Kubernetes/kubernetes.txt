@@ -377,7 +377,7 @@ For any plugins we can watch out it in default kube-system(kubectl get all -n ku
 even HPA also has the separate manifest file. HPA and CA depends on the metric server plugin
 
 
-Cluster AUTOSCALER - scale out/in the number of nodes using the ASG but not a manifest file
+Cluster AUTOSCALER - scale out/in the number of nodes using the ASG but not a manifest file(it doesn't require the manifest file)
 
 
 PersistentVolume and PersistentVolumeClaims and storage class
