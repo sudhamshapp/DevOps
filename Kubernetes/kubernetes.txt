@@ -338,7 +338,11 @@ kubernetes won't have great encryption mechanism whenever we're creating the sec
 How to encrypt etcd for secrets
 
 RBAC(Role Based access control) - directly related to security
-users(iam-user and groups(IAM-OAUTH-PROVIDER))/service accounts(basiscally a pod), roles/cluster-roles, role-binding/cluster-role-binding
+users(iam-user and groups(IAM-OAUTH-PROVIDER))/service accounts(basiscally a kinda yaml file), roles/cluster-roles, role-binding/cluster-role-binding
+role - to access a single namespace in k8s, we gonna create a role
+cluster role - to access a whole cluster in k8s, we gonna create a cluster role
+role binding - helps attaching a role(permissions) to service-account/user(user management)
+
 kubernetes not going manage the users, it offloads to identity providers
 person gets access to the kubernetes cluster without creating a user(if I download a example app, then it automatically asks login with googl/linkedin)
 
@@ -346,6 +350,10 @@ At a high level we will create a service account/user and then we'll create a ro
 suppose, if we're creating a role in a specifc namespace it is called as role, and if we're creating role in the scope of cluster it's called cluster-role, we can relate to role-binding as well
 
 KUBERNETES MONITORING(USING PROMETHEUS AND GRAFANA)
+k8s has API server, which exposes, this api server gonna exposes lot of metrics, PROMETHEUS gonna fetch this info and stores in TSDB(stores the metrics of k8s w.r.to timestamp)
+PROMETHEUS gonna integrate with alert manager for sending emails(slack)
+GRAFANA - used for data visualization, retrieves the info from PROMETHEUS, we can configure PROMETHEUS as a datasource
+we can download the PROMETHEUS and GRAFANA using helm and operators
 grafana id -3662
 
 
