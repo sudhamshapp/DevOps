@@ -298,7 +298,7 @@ LoadBalancer(external world)
 
 kubeshark - practical traffic viewing, helps how traffic is flowing within kubernetes and how one component is talking to the other component
 
-ingress(ingress controller and ingress resource)(acts as a layer7 load balancer)
+ingress(ingress controller and ingress resource)(acts as a layer7 load balancer), nginx ingress controller
 we're exposing multiple services(NodePort, ClusterIP, LoadBalancer)(behind the services ofcourse we have the deployments>replicasets>pods) with one ingress on the different paths
 when we opt the service type as LoadBalancer in kubernetes, it provisions the classic load balancer which is a legacy one
 
@@ -308,6 +308,10 @@ For example if we do a deployment using amazon.com to access it we should create
 we can also use service(type:LoadBalancer) for the above three deployments, but it gonna provision three layer4 load balancers, which gonna increase us cost, to overcome this, we use ingress(layer7) gonna provision us single load balancer for multiple servers
 if above are running as microservices, the requests coming from external world based on the url and path, the ingress picks up the url and forwards to the correct service deployment
 user(with an hostname)>ingress controller(reads the ingress resource)>service
+
+first deploy the nginx ingress controller using kubectl apply -f <url-of-the-nginx-controller> in a namespace(ingress-nginx)
+second apply the deployments(nginx and httpd with service type as ClusterIP) can be deployed in default namespace
+third apply the ingress resource deployment(kubectl apply -f <ingress-resource>) then check with kubectl get ingress
 
 ingress resource bridges the gap b/w ingress controller and actual deployments
 ingress resource has the routing rules and ingress controller reads the ingress resource and forwards traffic accordingly
