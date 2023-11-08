@@ -308,6 +308,7 @@ For example if we do a deployment using amazon.com to access it we should create
 if above are running as microservices, the requests coming from external world based on the url and path, the ingress picks up the url and forwards to the correct service deployment
 
 ingress resource bridges the gap b/w ingress controller and actual deployments
+ingress resource has the routing rules and ingress controller reads the ingress resource and forwards traffic accordingly
 
 The highlight stuff is  both ingress controller and ingress resource has the same load balancer i.e., classic load balncer
 # kubectl get svc -n ingress-nginx - to check the ingress controller
