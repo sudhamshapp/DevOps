@@ -366,7 +366,7 @@ grafana id -3662
 
 CRD - (custom resource defintion)
 
-Daemonsets - if we wanna deploy system-services(backup-services) or monitoring services on each node as a pod we use daemonsets
+Daemonsets - if we wanna deploy system-services(backup-services) or monitoring services on each node as a pod we use daemonsets(it's also basically a yaml Manifest, we can add PROMETHEUS kinda images)
 JOBS - it should perform its duties on nodes and depart (kubectl logs <podname>)
 
 HPA  - metric-server-plugin needs to be configured(in some clouds by default it's downloaded)(fixes the performance related issues(based on cpu/memory utilizaton, depending on resource utilization the pod should scaleout/scalein))
@@ -392,5 +392,6 @@ PVs lifecycle and Reclaim policies: Retain(volume is preserves regardless the li
 SC>PVC>deployment, when pvc is created pv gets created(pv is the actual volume), when pvc is deleted pv gets deleted
 
 statefulsets - it's basically used for deploying and managing stateful applications(mysql, postgresql), messaging systems(kafka)
-also check the difference b/w deployments(the order of pods is random) and statefulsets(the order of pods is sequential)
-
+also check the difference b/w deployments(the order of pods is random) and statefulsets(the order of pods is sequential(ordered creation and ordered termination))
+pv and pvc are mandatory for statefulsets
+Headless service won't have the ip address

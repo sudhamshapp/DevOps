@@ -6,7 +6,7 @@ spec:
   scaleTargetRef: # this block refers to the desired deployment we wanna scale-out/scale-in
     apiVersion: apps/v1
     kind: Deployment
-    name: nginx
+    name: nginx # here we're giving deployment name to get triggered when pod breaches the limits
   minReplicas: 1
   maxReplicas: 10
   metrics:
