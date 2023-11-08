@@ -304,8 +304,10 @@ when we opt the service type as LoadBalancer in kubernetes, it provisions the cl
 
 For example if we do a deployment using microsoft.com to access it we should create a service 
 For example if we do a deployment using google.com to access it we should create a service 
-For example if we do a deployment using amazon.com to access it we should create a service 
+For example if we do a deployment using amazon.com to access it we should create a service
+we can also use service(type:LoadBalancer) for the above three deployments, but it gonna provision three layer4 load balancers, which gonna increase us cost, to overcome this, we use ingress(layer7) gonna provision us single load balancer for multiple servers
 if above are running as microservices, the requests coming from external world based on the url and path, the ingress picks up the url and forwards to the correct service deployment
+user(with an hostname)>ingress controller(reads the ingress resource)>service
 
 ingress resource bridges the gap b/w ingress controller and actual deployments
 ingress resource has the routing rules and ingress controller reads the ingress resource and forwards traffic accordingly
