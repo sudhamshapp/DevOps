@@ -391,5 +391,6 @@ Access modes for PVs - RWO(Read write once)(for single node), ROX(Read only many
 PVs lifecycle and Reclaim policies: Retain(volume is preserves regardless the lifecycle of pod), Delete(volume isn't preserved if  pod is deleted) and Recycle
 SC>PVC>deployment, when pvc is created pv gets created(pv is the actual volume), when pvc is deleted pv gets deleted
 
-statefulsets
+statefulsets - it's basically used for deploying and managing stateful applications(mysql, postgresql), messaging systems(kafka)
+also check the difference b/w deployments(the order of pods is random) and statefulsets(the order of pods is sequential)
 
