@@ -378,3 +378,18 @@ even HPA also has the separate manifest file
 
 
 Cluster AUTOSCALER - scale out/in the number of nodes using the ASG but not a manifest file
+
+
+PersistentVolume and PersistentVolumeClaims and storage class
+* Static Provisioning means---> Creating manually---> Manam mundhey disks ni create chesi, pods ki allocate chesthaam.
+* Dynamic Provisioning means---> Creating Automatically---> Manam Storage class configuration ni use chesi, Manifest file lo PV and PVC ni define chesi, On-demand  create chesthaam.
+* We cannot delete volumes directly which is associated with Pods. But, we can manage volumes through policies ?
+
+PVs provide a way to decouple the storage from the lifecycle of pods
+we can allocate the storage to a pod from kubernetes worker nodes or using network attached storage 
+Access modes for PVs - RWO(Read write once)(for single node), ROX(Read only many)((for multiple node)) and RWX(Read write many)(for multiple node)
+PVs lifecycle and Reclaim policies: Retain(volume is preserves regardless the lifecycle of pod), Delete(volume isn't preserved if  pod is deleted) and Recycle
+SC>PVC>deployment, when pvc is created pv gets created(pv is the actual volume), when pvc is deleted pv gets deleted
+
+statefulsets
+
