@@ -374,7 +374,7 @@ HPA  - metric-server-plugin needs to be configured(in some clouds by default it'
 For any plugins we can watch out it in default kube-system(kubectl get all -n kube-system)
 
 
-even HPA also has the separate manifest file
+even HPA also has the separate manifest file. HPA and CA depends on the metric server plugin
 
 
 Cluster AUTOSCALER - scale out/in the number of nodes using the ASG but not a manifest file
