@@ -4,7 +4,7 @@ metadata:
   name: my-limit-range
   namespace: my-namespace
 spec:
-  limits:
+  limits: # although if we din't mention the resource block in deployment, it gonna take from this limit-range yaml file
   - type: Container
     defaultRequest:
       cpu: 100m

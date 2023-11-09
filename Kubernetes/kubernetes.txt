@@ -395,3 +395,8 @@ statefulsets - it's basically used for deploying and managing stateful applicati
 also check the difference b/w deployments(the order of pods is random) and statefulsets(the order of pods is sequential(ordered creation and ordered termination))
 pv and pvc are mandatory for statefulsets
 Headless service won't have the ip address
+
+limitRanage(for pods in a desired namespace) - Resstricts the resource utilization(kubectl get limitranage, kubectl describe limitranage <name-of-the-limitranage>)(it helps the hpa as well as ca)
+ResourceQuota(if we defined the limits for cpu and memory dedicated to namespace)(kubectl get resourcequota -n my-ns(namespace))
+
+https://www.linkedin.com/pulse/10-possible-errors-kubernetes-deployments-steps-naveed-abdul-sattar/?utm_source=share&utm_medium=member_android&utm_campaign=share_via
