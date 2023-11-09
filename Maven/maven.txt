@@ -53,13 +53,14 @@ Till here we just created the project, then we wanna generate the war and jar fi
 Maven build lifecycle - Basically it's used for build the code in a format, compiling, running test cases, wanna generate the jar and war
 these all commands should run under the javaproject that we created above
 these all steps should run from Java-project folder
-mvn validate - validates the project
-mvn compile - converts .java file to .class file and creates the target directory
-mvn test  - converts apptest.java to apptest.class (also generates surefire-reports)
-mvn package - generates the jar file - and lands it in the target directory
-mvn verify - verifies the genarated jar file whether it's correct or not (and no-extra stuff gets added)
-mvn install - it helps stroing the jar and pom in the m2 directory in the root directory (/root/.m2/repository/com/sudhamsh1996/Java-Project/1.0-SNAPSHOT), but it won't vanishes the stuff from java-project
-mvn deploy - genarated jar/war file should be stored onto remote-repo(nexus, jfrog - artifactory tool), if we wanna do so, need to add the disrtibution management tag in pom.xml file, then add the authentication info nexus/jfrog in settings.xml(add auth info inside the servers tag) present in the /opt/maven/conf 
+
+mvn validate - validates the project is correct and all necessary information is available
+mvn compile - compile the source code of the project, converts .java file to .class file and creates the target directory
+mvn test  - test the compiled source code using a suitable unit testing framework. These tests should not require the code be packaged or deployed, converts apptest.java to apptest.class (also generates surefire-reports)
+mvn package - take the compiled code and package it in its distributable format, such as a JAR, generates the jar file - and lands it in the target directory
+mvn verify - run any checks on results of integration tests to ensure quality criteria are met, verifies the genarated jar file whether it's correct or not (and no-extra stuff gets added)
+mvn install - install the package into the local repository, for use as a dependency in other projects locally, it helps stroing the jar and pom in the m2 directory in the root directory (/root/.m2/repository/com/sudhamsh1996/Java-Project/1.0-SNAPSHOT), but it won't vanishes the stuff from java-project
+mvn deploy - done in the build environment, copies the final package to the remote repository for sharing with other developers and projects, genarated jar/war file should be stored onto remote-repo(nexus, jfrog - artifactory tool), if we wanna do so, need to add the disrtibution management tag in pom.xml file, then add the authentication info nexus/jfrog in settings.xml(add auth info inside the servers tag) present in the /opt/maven/conf 
 
 
 mvn clean - helps the cleaning the stuff like target directory and it's Snapshot - but don't worry, a copy of data is stored in m2 directory under root
