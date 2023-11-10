@@ -34,6 +34,7 @@ git pull - pulls the code from github as well as the commit history - syncs the 
 
 git fetch  - it creates a branch with latest commit-id, although we don't see the changes unless we checkout to the latest commit
 git checkout <latest-commit-id> - this should merge the stuff on our local
+git merge  - helps altering the working directory
 git pull origin <branch-name>
 
 s3://personnel-bucket-of-sudhamsh/DevOps-and-Cloud-Resume-of-Sudhamsh.pdf
