@@ -15,4 +15,4 @@ github argocd example apps - https://github.com/argoproj/argocd-example-apps
 
 if we wanna interact with argocd cli - brew install argocd on mac
 argocd command reference - https://argo-cd.readthedocs.io/en/stable/user-guide/commands/argocd/
-adding some text
+adding some random text
